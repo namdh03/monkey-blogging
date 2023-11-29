@@ -52,17 +52,21 @@ export type IconProps = {
     onClick: () => void;
 };
 
-export type SignUpType = {
-    fullname: string;
+export type SignInType = {
     email: string;
     password: string;
 };
 
+export type SignUpType = SignInType & {
+    fullname: string;
+};
+
 export type InputProps = {
     id: string;
-    name: keyof SignUpType;
+    name: keyof SignInType | keyof SignUpType;
     type: string;
-    control: Control<SignUpType> | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: Control<any>;
     placeholder?: string;
     icon?: IconProps;
 };

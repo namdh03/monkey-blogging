@@ -1,27 +1,22 @@
-import { useState, FC, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
 import eye from "@assets/icons/eye.svg";
 import eyeSlash from "@assets/icons/eye-slash.svg";
 import Field from "@components/Field";
 import Label from "@components/Label";
 import Input from "@components/Input";
 import Button from "@components/Button";
-import configs from "@configs/index";
-import { SignUpType } from "@ts/index";
-import schema from "./SignUp.schema";
+import { SignInType } from "@ts/index";
+import schema from "./SignIn.schema";
 
-const SignUp: FC = () => {
+const SignIn = () => {
     const {
         control,
         handleSubmit,
         formState: { isValid, isSubmitting, errors },
-    } = useForm<SignUpType>({ resolver: yupResolver(schema) });
-    const navigate = useNavigate();
+    } = useForm<SignInType>({ resolver: yupResolver(schema) });
     const [togglePassword, setTogglePassword] = useState<boolean>(false);
 
     useEffect(() => {
@@ -35,53 +30,14 @@ const SignUp: FC = () => {
         }
     }, [errors]);
 
-    const handleSignUp = async (values: SignUpType) => {
+    const handleSignIn = async (values: SignInType) => {
         if (!isValid || isSubmitting) return;
 
-        try {
-            const currentUser = configs.firebase.auth.currentUser;
-            const colRef = collection(configs.firebase.db, "users");
-
-            await createUserWithEmailAndPassword(
-                configs.firebase.auth,
-                values.email,
-                values.password
-            );
-
-            if (currentUser) {
-                await updateProfile(currentUser, {
-                    displayName: values.fullname,
-                });
-            }
-
-            await addDoc(colRef, {
-                fullname: values.fullname,
-                email: values.email,
-            });
-
-            toast.success("Sign up successfully");
-            navigate(configs.routes.home);
-        } catch (error) {
-            toast.error((error as Error).message, {
-                delay: 0,
-                pauseOnHover: false,
-            });
-        }
+        console.log(values);
     };
 
     return (
-        <form className="form" onSubmit={handleSubmit(handleSignUp)}>
-            <Field>
-                <Label htmlFor="fullname">Fullname</Label>
-                <Input
-                    type="text"
-                    name="fullname"
-                    id="fullname"
-                    placeholder="Please enter your fullname"
-                    control={control}
-                />
-            </Field>
-
+        <form className="form" onSubmit={handleSubmit(handleSignIn)}>
             <Field>
                 <Label htmlFor="email">Email address</Label>
                 <Input
@@ -109,10 +65,10 @@ const SignUp: FC = () => {
             </Field>
 
             <Button type="submit" isLoading={isSubmitting} className="button">
-                Sign Up
+                Sign In
             </Button>
         </form>
     );
 };
 
-export default SignUp;
+export default SignIn;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SignUpPageStyled = styled.section`
+export const AuthenticationPageStyled = styled.section`
     min-height: 100vh;
     padding: 115px 0 217px;
     text-align: center;

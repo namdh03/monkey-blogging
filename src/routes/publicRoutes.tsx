@@ -1,5 +1,7 @@
 import configs from "@configs/index";
+import Authentication from "@layouts/Authentication";
 import Home from "@pages/Home";
+import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
 
 const publicRoutes = [
@@ -8,8 +10,17 @@ const publicRoutes = [
         element: <Home />,
     },
     {
-        path: configs.routes.signUp,
-        element: <SignUp />,
+        element: <Authentication />,
+        children: [
+            {
+                path: configs.routes.signIn,
+                element: <SignIn />,
+            },
+            {
+                path: configs.routes.signUp,
+                element: <SignUp />,
+            },
+        ],
     },
 ];
 
