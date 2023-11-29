@@ -7,18 +7,25 @@ import Container from "@components/Container";
 import Field from "@components/Field";
 import Label from "@components/Label";
 import Input from "@components/Input";
+import Button from "@components/Button";
 import { SignUpPageStyled } from "./SignUp.styled";
 
 const SignUp: FC = () => {
     const {
         control,
         handleSubmit,
-        // formState: { errors, isValid, isSubmitting },
+        formState: { isValid, isSubmitting },
     } = useForm();
     const [togglePassword, setTogglePassword] = useState<boolean>(false);
 
     const handleSignUp = async (values: unknown) => {
-        console.log(values);
+        if (!isValid || isSubmitting) return;
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(null);
+                console.log(values);
+            }, 5000);
+        });
     };
 
     return (
@@ -64,6 +71,14 @@ const SignUp: FC = () => {
                             }}
                         />
                     </Field>
+
+                    <Button
+                        type="submit"
+                        isLoading={isSubmitting}
+                        className="button"
+                    >
+                        SignUp
+                    </Button>
                 </form>
             </SignUpPageStyled>
         </Container>

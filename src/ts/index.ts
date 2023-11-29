@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { ComponentPropsWithoutRef, Dispatch } from "react";
 import { Control, FieldValues } from "react-hook-form";
 import { AuthActionType } from "@utils/enum";
 
@@ -59,4 +59,17 @@ export type InputProps = {
     control: Control<FieldValues> | undefined;
     placeholder?: string;
     icon?: IconProps;
+};
+
+export type LoadingProps = {
+    size?: number | string;
+    thickness?: number;
+};
+
+export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
+    children: React.ReactNode;
+    type?: "button" | "submit" | "reset" | undefined;
+    disabled?: boolean;
+    isLoading?: boolean;
+    onClick?: () => void;
 };

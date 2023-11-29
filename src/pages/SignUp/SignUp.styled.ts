@@ -16,4 +16,8 @@ export const SignUpPageStyled = styled.section`
         margin: 107px auto 0;
         max-width: 800px;
     }
+
+    .button {
+        margin-top: 79px;
+    }
 `;
