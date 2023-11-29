@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, Dispatch } from "react";
-import { Control, FieldValues } from "react-hook-form";
+import { Control } from "react-hook-form";
 import { AuthActionType } from "@utils/enum";
 
 export type User = {
@@ -52,11 +52,17 @@ export type IconProps = {
     onClick: () => void;
 };
 
+export type SignUpType = {
+    fullname: string;
+    email: string;
+    password: string;
+};
+
 export type InputProps = {
     id: string;
-    name: string;
+    name: keyof SignUpType;
     type: string;
-    control: Control<FieldValues> | undefined;
+    control: Control<SignUpType> | undefined;
     placeholder?: string;
     icon?: IconProps;
 };

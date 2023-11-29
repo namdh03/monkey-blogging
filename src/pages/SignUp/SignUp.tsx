@@ -1,5 +1,10 @@
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 import logo from "@assets/icons/logo.svg";
 import eye from "@assets/icons/eye.svg";
 import eyeSlash from "@assets/icons/eye-slash.svg";
@@ -8,24 +13,63 @@ import Field from "@components/Field";
 import Label from "@components/Label";
 import Input from "@components/Input";
 import Button from "@components/Button";
+import configs from "@configs/index";
+import { SignUpType } from "@ts/index";
+import schema from "./SignUp.schema";
 import { SignUpPageStyled } from "./SignUp.styled";
 
 const SignUp: FC = () => {
     const {
         control,
         handleSubmit,
-        formState: { isValid, isSubmitting },
-    } = useForm();
+        formState: { isValid, isSubmitting, errors },
+    } = useForm<SignUpType>({ resolver: yupResolver(schema) });
+    const navigate = useNavigate();
     const [togglePassword, setTogglePassword] = useState<boolean>(false);
 
-    const handleSignUp = async (values: unknown) => {
+    useEffect(() => {
+        const arrErrs = Object.values(errors);
+
+        if (arrErrs.length > 0) {
+            toast.error(arrErrs[0].message, {
+                delay: 0,
+                pauseOnHover: false,
+            });
+        }
+    }, [errors]);
+
+    const handleSignUp = async (values: SignUpType) => {
         if (!isValid || isSubmitting) return;
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(null);
-                console.log(values);
-            }, 5000);
-        });
+
+        try {
+            const currentUser = configs.firebase.auth.currentUser;
+            const colRef = collection(configs.firebase.db, "users");
+
+            await createUserWithEmailAndPassword(
+                configs.firebase.auth,
+                values.email,
+                values.password
+            );
+
+            if (currentUser) {
+                await updateProfile(currentUser, {
+                    displayName: values.fullname,
+                });
+            }
+
+            await addDoc(colRef, {
+                fullname: values.fullname,
+                email: values.email,
+            });
+
+            toast.success("Sign up successfully");
+            navigate(configs.routes.home);
+        } catch (error) {
+            toast.error((error as Error).message, {
+                delay: 0,
+                pauseOnHover: false,
+            });
+        }
     };
 
     return (

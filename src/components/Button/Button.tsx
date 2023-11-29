@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { ButtonProps } from "@ts/index";
 import Loading from "@components/Loading";
+import { ButtonProps } from "@ts/index";
 import { ButtonStyled } from "./Button.styled";
 
 const Button: FC<ButtonProps> = ({
