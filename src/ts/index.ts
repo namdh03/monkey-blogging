@@ -61,12 +61,13 @@ export type SignUpType = SignInType & {
     fullname: string;
 };
 
+export type FormType = SignInType | SignUpType;
+
 export type InputProps = {
     id: string;
     name: keyof SignInType | keyof SignUpType;
     type: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    control: Control<any>;
+    control: Control<SignInType> | Control<SignUpType>;
     placeholder?: string;
     icon?: IconProps;
 };

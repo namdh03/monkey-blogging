@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useController } from "react-hook-form";
-import { InputProps } from "@ts/index";
+import { Control, useController } from "react-hook-form";
+import { FormType, InputProps } from "@ts/index";
 import { InputStyled } from "./Input.styled";
 
 const Input: FC<InputProps> = ({
@@ -13,7 +13,7 @@ const Input: FC<InputProps> = ({
     ...props
 }) => {
     const { field } = useController({
-        control,
+        control: control as Control<FormType>,
         name,
         defaultValue: "",
     });
