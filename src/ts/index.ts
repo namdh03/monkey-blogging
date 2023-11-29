@@ -1,0 +1,62 @@
+import { Dispatch } from "react";
+import { Control, FieldValues } from "react-hook-form";
+import { AuthActionType } from "@utils/enum";
+
+export type User = {
+    aud: string;
+    azp: string;
+    email: string;
+    email_verified: boolean;
+    exp: number;
+    family_name: string;
+    given_name: string;
+    iat: number;
+    iss: string;
+    jti: string;
+    locale: string;
+    name: string;
+    nbf: number;
+    picture: string;
+    sub: string;
+};
+
+export type AuthState = {
+    isAuthenticated?: boolean;
+    isInitialized?: boolean;
+    user: User | null;
+};
+
+export interface AuthContextType extends AuthState {
+    dispatch: Dispatch<PayloadAction<AuthState>>;
+}
+
+export type PayloadAction<T> = {
+    type: AuthActionType;
+    payload: T;
+};
+
+export type ReducerHandlers = {
+    INITIALIZE(state: AuthState, action: PayloadAction<AuthState>): AuthState;
+    SIGN_IN(state: AuthState, action: PayloadAction<AuthState>): AuthState;
+    SIGN_OUT(state: AuthState): AuthState;
+};
+
+export type LabelProps = {
+    htmlFor: string;
+    children: React.ReactNode;
+    className?: string;
+};
+
+export type IconProps = {
+    src: string;
+    onClick: () => void;
+};
+
+export type InputProps = {
+    id: string;
+    name: string;
+    type: string;
+    control: Control<FieldValues> | undefined;
+    placeholder?: string;
+    icon?: IconProps;
+};
