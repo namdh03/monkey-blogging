@@ -1,4 +1,4 @@
-import { PayloadAction, AuthState, ReducerHandlers } from "@ts/index";
+import { AuthState, PayloadAction, ReducerHandlers } from "@ts/index";
 
 const reducerHandlers: ReducerHandlers = {
     INITIALIZE(state: AuthState, action: PayloadAction<AuthState>): AuthState {

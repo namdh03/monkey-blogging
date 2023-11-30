@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, Dispatch } from "react";
 import { Control } from "react-hook-form";
-import { AuthActionType } from "@utils/enum";
+import { AuthActionType, Role } from "@utils/enum";
 
 export type User = {
     aud: string;
@@ -18,6 +18,7 @@ export type User = {
     nbf: number;
     picture: string;
     sub: string;
+    role: Role;
 };
 
 export type AuthState = {
@@ -39,6 +40,11 @@ export type ReducerHandlers = {
     INITIALIZE(state: AuthState, action: PayloadAction<AuthState>): AuthState;
     SIGN_IN(state: AuthState, action: PayloadAction<AuthState>): AuthState;
     SIGN_OUT(state: AuthState): AuthState;
+};
+
+export type RoleBasedGuardProps = {
+    accessibleRoles: Array<Role>;
+    children: React.ReactNode;
 };
 
 export type LabelProps = {

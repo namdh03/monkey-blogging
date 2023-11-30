@@ -1,4 +1,4 @@
-import { PropsWithChildren, FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { FieldStyled } from "./Field.styled";
 
 const Field: FC<PropsWithChildren> = ({ children }) => {

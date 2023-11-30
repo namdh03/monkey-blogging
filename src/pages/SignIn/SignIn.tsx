@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import Button from "@components/Button";
 import { SignInType } from "@ts/index";
 import schema from "./SignIn.schema";
 
-const SignIn = () => {
+const SignIn: FC = () => {
     const {
         control,
         handleSubmit,
