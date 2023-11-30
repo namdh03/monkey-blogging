@@ -58,7 +58,10 @@ const SignUp: FC = () => {
                 email: values.email,
             });
 
-            toast.success("Sign up successfully");
+            toast.success("Sign up successfully", {
+                delay: 0,
+                pauseOnHover: false,
+            });
         } catch (error) {
             toast.error((error as Error).message, {
                 delay: 0,

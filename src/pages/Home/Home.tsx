@@ -13,10 +13,17 @@ const Home: FC = () => {
         dispatch(systemSignOut());
     };
 
-    return user ? (
-        <button onClick={handleSignOut}>Sign Out</button>
-    ) : (
-        <Link to={configs.routes.signIn}>Sign In</Link>
+    return (
+        <div>
+            {user ? (
+                <div>
+                    <span>Hello, {user.email}</span>
+                    <button onClick={handleSignOut}>Sign Out</button>
+                </div>
+            ) : (
+                <Link to={configs.routes.signIn}>Sign In</Link>
+            )}
+        </div>
     );
 };
 
