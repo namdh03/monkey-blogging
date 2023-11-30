@@ -47,6 +47,11 @@ const SignUp: FC = () => {
                 values.password
             );
 
+            toast.success("Sign up successfully", {
+                delay: 0,
+                pauseOnHover: false,
+            });
+
             if (currentUser) {
                 await updateProfile(currentUser, {
                     displayName: values.fullname,
@@ -56,11 +61,6 @@ const SignUp: FC = () => {
             await addDoc(colRef, {
                 fullname: values.fullname,
                 email: values.email,
-            });
-
-            toast.success("Sign up successfully", {
-                delay: 0,
-                pauseOnHover: false,
             });
         } catch (error) {
             toast.error((error as Error).message, {

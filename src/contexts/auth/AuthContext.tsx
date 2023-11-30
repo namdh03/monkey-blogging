@@ -38,7 +38,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ ...state, dispatch }}>
-            {children}
+            {state.isInitialized && children}
         </AuthContext.Provider>
     );
 };
