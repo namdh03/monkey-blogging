@@ -8,7 +8,9 @@ const RoleBasedGuard: FC<RoleBasedGuardProps> = ({
 }) => {
     const { user } = useAuth();
 
-    if (!accessibleRoles.includes(user!.role)) return <div>Not found!</div>;
+    console.log(user, accessibleRoles);
+
+    // if (!accessibleRoles.includes(user!.role)) return <div>Not found!</div>;
 
     return <>{children}</>;
 };

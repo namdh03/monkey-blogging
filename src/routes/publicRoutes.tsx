@@ -1,4 +1,5 @@
 import configs from "@configs/index";
+import GuestGuard from "@/guards/GuestGuard";
 import Authentication from "@layouts/Authentication";
 import Home from "@pages/Home";
 import SignIn from "@pages/SignIn";
@@ -10,7 +11,11 @@ const publicRoutes = [
         element: <Home />,
     },
     {
-        element: <Authentication />,
+        element: (
+            <GuestGuard>
+                <Authentication />
+            </GuestGuard>
+        ),
         children: [
             {
                 path: configs.routes.signIn,

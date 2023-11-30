@@ -1,25 +1,7 @@
 import { ComponentPropsWithoutRef, Dispatch } from "react";
 import { Control } from "react-hook-form";
+import { User } from "firebase/auth";
 import { AuthActionType, Role } from "@utils/enum";
-
-export type User = {
-    aud: string;
-    azp: string;
-    email: string;
-    email_verified: boolean;
-    exp: number;
-    family_name: string;
-    given_name: string;
-    iat: number;
-    iss: string;
-    jti: string;
-    locale: string;
-    name: string;
-    nbf: number;
-    picture: string;
-    sub: string;
-    role: Role;
-};
 
 export type AuthState = {
     isAuthenticated?: boolean;

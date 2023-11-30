@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -21,7 +21,6 @@ const SignUp: FC = () => {
         handleSubmit,
         formState: { isValid, isSubmitting, errors },
     } = useForm<SignUpType>({ resolver: yupResolver(schema) });
-    const navigate = useNavigate();
     const [togglePassword, setTogglePassword] = useState<boolean>(false);
 
     useEffect(() => {
@@ -60,7 +59,6 @@ const SignUp: FC = () => {
             });
 
             toast.success("Sign up successfully");
-            navigate(configs.routes.home);
         } catch (error) {
             toast.error((error as Error).message, {
                 delay: 0,
@@ -107,6 +105,11 @@ const SignUp: FC = () => {
                     }}
                 />
             </Field>
+
+            <span className="question">
+                {`Already have an account? `}
+                <Link to={configs.routes.signIn}>Sign in</Link>
+            </span>
 
             <Button type="submit" isLoading={isSubmitting} className="button">
                 Sign Up

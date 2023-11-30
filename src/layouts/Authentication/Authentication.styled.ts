@@ -17,7 +17,19 @@ export const AuthenticationPageStyled = styled.section`
         max-width: 800px;
     }
 
+    .question {
+        display: block;
+        margin-top: 49px;
+        font-size: 1.8rem;
+
+        a {
+            color: ${(props) => props.theme.primaryColor};
+            font-size: 2rem;
+            font-weight: 600;
+        }
+    }
+
     .button {
-        margin-top: 79px;
+        margin-top: 30px;
     }
 `;
