@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
 export const ButtonStyled = styled.button`
-    --button-height: 80px;
+    --width: 343px;
+    --height: 80px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    min-width: 343px;
-    height: var(--button-height);
-    line-height: var(--button-height);
+    min-width: var(--width);
+    height: var(--height);
+    line-height: var(--height);
     padding: 0 16px;
     border-radius: 8px;
     background: linear-gradient(
