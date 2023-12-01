@@ -52,7 +52,7 @@ const Home: FC = () => {
                 <Heading>Mới nhất</Heading>
 
                 <div className="layout">
-                    <Newest.Main></Newest.Main>
+                    <Newest.Main />
                     <div className="sidebar">
                         <Newest.Item />
                         <Newest.Item />

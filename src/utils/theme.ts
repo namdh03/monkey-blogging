@@ -13,6 +13,8 @@ const theme = {
     buttonBgColor: "#00B4AA",
     tertiary: "#3A1097",
     accent: "#00D1ED",
+    categoryDefaultBgColor: "#fff",
+    categoryPrimaryBgColor: "#F3EDFF",
 };
 
 export default theme;

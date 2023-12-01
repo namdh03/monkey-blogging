@@ -74,3 +74,29 @@ export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
     disabled?: boolean;
     isLoading?: boolean;
 };
+
+export type VariantType = "primary" | "secondary" | "default" | "text";
+
+export type CategoryProps = ComponentPropsWithoutRef<"span"> & {
+    to: string;
+    children: React.ReactNode;
+    variant?: VariantType;
+};
+
+export type SizeType = "small" | "medium" | "large";
+
+export type TitleProps = ComponentPropsWithoutRef<"h3"> & {
+    children: React.ReactNode;
+    to: string;
+    size?: SizeType;
+};
+
+export type MetaProps = {
+    time: string;
+    author: string;
+    className?: string;
+};
+
+export type ImageProps = ComponentPropsWithoutRef<"img"> & {
+    url: string;
+};

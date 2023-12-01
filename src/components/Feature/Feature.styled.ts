@@ -7,16 +7,10 @@ export const FeatureStyled = styled.article`
     height: 169px;
 
     .post {
-        &-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 16px;
-        }
-
         &-overlay {
             position: absolute;
             inset: 0;
+            z-index: 0;
             border-radius: 16px;
             background: linear-gradient(
                 179.77deg,
@@ -43,44 +37,8 @@ export const FeatureStyled = styled.article`
             margin-bottom: 16px;
         }
 
-        &-category {
-            display: inline-block;
-            padding: 8px 12px;
-            border-radius: 8px;
-            color: #6b6b6b;
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            background-color: #f3f3f3;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100px;
-        }
-
         &-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-            margin-left: auto;
-        }
-
-        &-dot {
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background-color: currentColor;
-            border-radius: 100rem;
-        }
-
-        &-title {
-            font-weight: bold;
-            line-height: 1.5;
-            display: block;
-            font-size: 22px;
-            color: white;
+            color: #f8f9fa;
         }
     }
 

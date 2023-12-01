@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const NewestStyled = styled.article`
+export const ItemStyled = styled.article`
     display: flex;
     align-items: center;
     gap: 20px;
@@ -30,40 +30,19 @@ export const NewestStyled = styled.article`
         }
 
         &-category {
-            display: inline-block;
-            padding: 8px;
-            border-radius: 8px;
-            color: #6b6b6b;
-            font-size: 12px;
-            font-weight: 600;
-            background-color: white;
             margin-bottom: 8px;
         }
 
         &-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-left: auto;
             color: #6b6b6b;
-        }
 
-        &-dot {
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background-color: currentColor;
-            border-radius: 100rem;
+            .dot {
+                color: #b1b5c3;
+            }
         }
 
         &-title {
-            font-weight: bold;
-            line-height: 1.5;
-            display: block;
-            font-size: 16px;
-            margin-bottom: 8px;
+            margin: 8px 0 10px;
         }
     }
 `;

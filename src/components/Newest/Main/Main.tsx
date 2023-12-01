@@ -1,3 +1,7 @@
+import configs from "@configs/index";
+import Category from "@components/Category";
+import Title from "@components/Title";
+import Meta from "@components/Meta";
 import { MainStyled } from "./Main.styled";
 
 const Main = () => {
@@ -9,15 +13,17 @@ const Main = () => {
                     alt=""
                 />
             </div>
-            <div className="post-category">Kiến thức</div>
-            <h3 className="post-title">
+            <Category
+                to={configs.routes.home}
+                variant="primary"
+                className="post-category"
+            >
+                Kiến thức
+            </Category>
+            <Title to={configs.routes.home} size="large" className="post-title">
                 Hướng dẫn setup phòng cực chill dành cho người mới toàn tập
-            </h3>
-            <div className="post-info">
-                <span className="post-time">Mar 23</span>
-                <span className="post-dot"></span>
-                <span className="post-author">Andiez Le</span>
-            </div>
+            </Title>
+            <Meta time="Mar 23" author="Andiez Le" className="post-info" />
         </MainStyled>
     );
 };

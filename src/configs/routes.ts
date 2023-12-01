@@ -4,6 +4,7 @@ const routes = {
     signUp: "/sign-up",
     blog: "/blog",
     contact: "/contact",
+    dashboard: "/dashboard",
     notFound: "*",
 };
 

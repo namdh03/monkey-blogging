@@ -1,6 +1,6 @@
 // globalStyles.ts
 import { createGlobalStyle } from "styled-components";
-import { GlobalClasses } from "./GlobalClasses";
+import { GlobalClasses } from "./globalClasses";
 
 export const GlobalStyle = createGlobalStyle`
     ${GlobalClasses}

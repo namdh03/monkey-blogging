@@ -142,7 +142,7 @@ export const GlobalClasses = css`
     }
 
     body {
-        font-family: "Poppins", sans-serif;
+        font-family: "Montserrat", sans-serif;
         font-size: 1.6rem;
     }
 
