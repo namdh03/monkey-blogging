@@ -65,8 +65,11 @@ export type LoadingProps = {
     thickness?: number;
 };
 
+export type ButtonVariantType = "primary" | "secondary" | "default" | "text";
+
 export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
     children: React.ReactNode;
+    variant?: ButtonVariantType;
     to?: string;
     disabled?: boolean;
     isLoading?: boolean;

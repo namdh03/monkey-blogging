@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import configs from "@configs/index";
 import useAuth from "@hooks/useAuth";
 import { signOut as systemSignOut } from "@contexts/auth/actions";
+import Banner from "@components/Banner";
 
 const Home: FC = () => {
     const { dispatch, user } = useAuth();
@@ -14,16 +15,25 @@ const Home: FC = () => {
     };
 
     return (
-        <div>
-            {user ? (
-                <div>
-                    <span>Hello, {user.email}</span>
-                    <button onClick={handleSignOut}>Sign Out</button>
-                </div>
-            ) : (
-                <Link to={configs.routes.signIn}>Sign In</Link>
-            )}
-        </div>
+        <>
+            <div style={{ marginBottom: "10px" }}>
+                {user ? (
+                    <div>
+                        <span>Hello, {user.email} -</span>
+                        <button
+                            style={{ cursor: "pointer" }}
+                            onClick={handleSignOut}
+                        >
+                            Sign Out
+                        </button>
+                    </div>
+                ) : (
+                    <Link to={configs.routes.signIn}>Sign In</Link>
+                )}
+            </div>
+
+            <Banner />
+        </>
     );
 };
 

@@ -107,7 +107,12 @@ const SignUp: FC = () => {
                 <Link to={configs.routes.signIn}>Sign in</Link>
             </span>
 
-            <Button type="submit" isLoading={isSubmitting} className="button">
+            <Button
+                variant="primary"
+                type="submit"
+                isLoading={isSubmitting}
+                className="button"
+            >
                 Sign Up
             </Button>
         </form>

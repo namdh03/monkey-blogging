@@ -1,4 +1,3 @@
-import Button from "@components/Button";
 import styled from "styled-components";
 
 export const HeaderStyled = styled.header`
@@ -64,11 +63,8 @@ export const HeaderStyled = styled.header`
             cursor: pointer;
         }
     }
-`;
 
-export const ButtonStyled = styled(Button)`
-    --width: 191px;
-    --height: 60px;
-    font-size: 1.8rem;
-    background: ${(props) => props.theme.buttonBgColor};
+    .user {
+        font-size: 1.8rem;
+    }
 `;

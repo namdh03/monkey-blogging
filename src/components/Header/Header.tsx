@@ -3,7 +3,8 @@ import logo from "@assets/icons/logo.svg";
 import search from "@assets/icons/search.svg";
 import configs from "@configs/index";
 import useAuth from "@hooks/useAuth";
-import { ButtonStyled, HeaderStyled } from "./Header.styled";
+import { HeaderStyled } from "./Header.styled";
+import Button from "@components/Button";
 
 const navbarLinks = [
     {
@@ -59,9 +60,13 @@ const Header = () => {
             </div>
 
             {user ? (
-                <div>Hello, {user.displayName || "guys"}</div>
+                <span className="user">
+                    Hello, {user.displayName || "guys"}
+                </span>
             ) : (
-                <ButtonStyled to={configs.routes.signUp}>Sign Up</ButtonStyled>
+                <Button variant="secondary" to={configs.routes.signUp}>
+                    Sign Up
+                </Button>
             )}
         </HeaderStyled>
     );

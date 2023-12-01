@@ -6,6 +6,7 @@ import { ButtonStyled } from "./Button.styled";
 
 const Button: FC<ButtonProps> = ({
     children,
+    variant = "default",
     to,
     disabled,
     isLoading,
@@ -14,12 +15,18 @@ const Button: FC<ButtonProps> = ({
     if (to)
         return (
             <Link to={to}>
-                <ButtonStyled {...props}>{children}</ButtonStyled>
+                <ButtonStyled $variant={variant} {...props}>
+                    {children}
+                </ButtonStyled>
             </Link>
         );
 
     return (
-        <ButtonStyled disabled={disabled || isLoading} {...props}>
+        <ButtonStyled
+            $variant={variant}
+            disabled={disabled || isLoading}
+            {...props}
+        >
             {isLoading ? <Loading /> : children}
         </ButtonStyled>
     );
