@@ -2,6 +2,7 @@ import configs from "@configs/index";
 import GuestGuard from "@/guards/GuestGuard";
 import Authentication from "@layouts/Authentication";
 import MainLayout from "@layouts/MainLayout";
+import NotFound from "@pages/NotFound";
 import Home from "@pages/Home";
 import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
@@ -32,6 +33,10 @@ const publicRoutes = [
                 element: <SignUp />,
             },
         ],
+    },
+    {
+        path: configs.routes.notFound,
+        element: <NotFound />,
     },
 ];
 
