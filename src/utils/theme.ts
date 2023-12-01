@@ -11,6 +11,8 @@ const theme = {
     searchBorderColor: "#cfcfcf",
     searchBorderHoverColor: "#316BFF",
     buttonBgColor: "#00B4AA",
+    tertiary: "#3A1097",
+    accent: "#00D1ED",
 };
 
 export default theme;

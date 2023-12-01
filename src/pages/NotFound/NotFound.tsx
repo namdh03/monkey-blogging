@@ -13,7 +13,9 @@ const NotFound = () => {
 
             <h1 className="title">Oops! Page not found</h1>
 
-            <Button to={configs.routes.home}>Back to home</Button>
+            <Button variant="primary" to={configs.routes.home}>
+                Back to home
+            </Button>
         </NotFoundStyled>
     );
 };

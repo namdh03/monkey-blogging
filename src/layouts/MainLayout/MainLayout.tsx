@@ -7,7 +7,10 @@ const MainLayout = () => {
         <>
             <Container>
                 <Header />
-                <Outlet />
+
+                <main style={{ paddingBottom: "100px" }}>
+                    <Outlet />
+                </main>
             </Container>
         </>
     );
