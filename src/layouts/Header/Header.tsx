@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "@assets/icons/logo.svg";
 import search from "@assets/icons/search.svg";
 import configs from "@configs/index";
+import useAuth from "@hooks/useAuth";
 import { ButtonStyled, HeaderStyled } from "./Header.styled";
 
 const navbarLinks = [
@@ -20,6 +21,8 @@ const navbarLinks = [
 ];
 
 const Header = () => {
+    const { user } = useAuth();
+
     return (
         <HeaderStyled>
             <Link to={configs.routes.home}>
@@ -55,7 +58,11 @@ const Header = () => {
                 <img src={search} alt="" className="search__icon" />
             </div>
 
-            <ButtonStyled>Sign Up</ButtonStyled>
+            {user ? (
+                <div>Hello, {user.displayName || "guys"}</div>
+            ) : (
+                <ButtonStyled to={configs.routes.signUp}>Sign Up</ButtonStyled>
+            )}
         </HeaderStyled>
     );
 };

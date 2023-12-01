@@ -67,8 +67,7 @@ export type LoadingProps = {
 
 export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
     children: React.ReactNode;
-    type?: "button" | "submit" | "reset" | undefined;
+    to?: string;
     disabled?: boolean;
     isLoading?: boolean;
-    onClick?: () => void;
 };

@@ -33,7 +33,7 @@ export const HeaderStyled = styled.header`
     .search {
         position: relative;
         min-width: 320px;
-        margin-left: auto;
+        margin: 0 21px 0 auto;
 
         &__input {
             width: 100%;
@@ -69,7 +69,6 @@ export const HeaderStyled = styled.header`
 export const ButtonStyled = styled(Button)`
     --width: 191px;
     --height: 60px;
-    margin-left: 21px;
     font-size: 1.8rem;
     background: ${(props) => props.theme.buttonBgColor};
 `;

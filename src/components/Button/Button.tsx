@@ -1,23 +1,25 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import Loading from "@components/Loading";
 import { ButtonProps } from "@ts/index";
 import { ButtonStyled } from "./Button.styled";
 
 const Button: FC<ButtonProps> = ({
     children,
-    type,
+    to,
     disabled,
     isLoading,
-    onClick,
     ...props
 }) => {
+    if (to)
+        return (
+            <Link to={to}>
+                <ButtonStyled {...props}>{children}</ButtonStyled>
+            </Link>
+        );
+
     return (
-        <ButtonStyled
-            type={type}
-            disabled={disabled || isLoading}
-            onClick={onClick}
-            {...props}
-        >
+        <ButtonStyled disabled={disabled || isLoading} {...props}>
             {isLoading ? <Loading /> : children}
         </ButtonStyled>
     );

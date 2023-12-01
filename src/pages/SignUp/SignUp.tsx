@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import eye from "@assets/icons/eye.svg";
 import eyeSlash from "@assets/icons/eye-slash.svg";
@@ -38,7 +38,6 @@ const SignUp: FC = () => {
         if (!isValid || isSubmitting) return;
 
         try {
-            const currentUser = configs.firebase.auth.currentUser;
             const colRef = collection(configs.firebase.db, "users");
 
             await createUserWithEmailAndPassword(
@@ -51,12 +50,6 @@ const SignUp: FC = () => {
                 delay: 0,
                 pauseOnHover: false,
             });
-
-            if (currentUser) {
-                await updateProfile(currentUser, {
-                    displayName: values.fullname,
-                });
-            }
 
             await addDoc(colRef, {
                 fullname: values.fullname,
