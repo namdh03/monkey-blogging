@@ -5,7 +5,11 @@ import { HeaderStyled } from "./Header.styled";
 const Header = () => {
     return (
         <HeaderStyled>
-            <Button to={configs.routes.dashboard} className="header-button">
+            <Button
+                variant="secondary"
+                to={configs.routes.addPost}
+                className="header-button"
+            >
                 Write new post
             </Button>
             <div className="header-avatar">

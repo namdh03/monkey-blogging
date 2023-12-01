@@ -49,13 +49,19 @@ export type SignUpType = SignInType & {
     fullname: string;
 };
 
-export type FormType = SignInType | SignUpType;
+export type AddPostType = {
+    title: string;
+    slug: string;
+    category: string;
+};
+
+export type FormType = SignInType | SignUpType | AddPostType;
 
 export type InputProps = {
     id: string;
-    name: keyof SignInType | keyof SignUpType;
+    name: keyof SignInType | keyof SignUpType | keyof AddPostType;
     type: string;
-    control: Control<SignInType> | Control<SignUpType>;
+    control: Control<SignInType> | Control<SignUpType> | Control<AddPostType>;
     placeholder?: string;
     icon?: IconProps;
 };
@@ -99,4 +105,16 @@ export type MetaProps = {
 
 export type ImageProps = ComponentPropsWithoutRef<"img"> & {
     url: string;
+};
+
+export type NavbarLinksType = {
+    path: string;
+    name: string;
+};
+
+export type sidebarLinksType = {
+    title: string;
+    url: string;
+    icon: string;
+    onclick?: () => void;
 };

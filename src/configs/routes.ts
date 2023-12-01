@@ -5,6 +5,11 @@ const routes = {
     blog: "/blog",
     contact: "/contact",
     dashboard: "/dashboard",
+    manage: "/manage",
+    managePost: "/manage/post",
+    manageCategory: "/manage/category",
+    manageUser: "/manage/user",
+    addPost: "/manage/add-post",
     notFound: "*",
 };
 

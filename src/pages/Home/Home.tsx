@@ -24,7 +24,8 @@ const Home: FC = () => {
             <div style={{ marginBottom: "10px" }}>
                 {user ? (
                     <div>
-                        <span>Hello, {user.email} -</span>
+                        <span>Hello, {user.email} - </span>
+                        <Link to={configs.routes.dashboard}>Dashboard -</Link>
                         <button
                             style={{ cursor: "pointer" }}
                             onClick={handleSignOut}

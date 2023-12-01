@@ -3,10 +3,11 @@ import logo from "@assets/icons/logo.svg";
 import search from "@assets/icons/search.svg";
 import configs from "@configs/index";
 import useAuth from "@hooks/useAuth";
+import { NavbarLinksType } from "@ts/index";
 import { HeaderStyled } from "./Header.styled";
 import Button from "@components/Button";
 
-const navbarLinks = [
+const navbarLinks: NavbarLinksType[] = [
     {
         path: configs.routes.home,
         name: "Home",
