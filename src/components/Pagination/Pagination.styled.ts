@@ -34,5 +34,10 @@ export const PaginationStyled = styled.div`
             color: white;
             background-color: ${(props) => props.theme.secondaryColor};
         }
+
+        &-icon {
+            width: 30px;
+            height: 30px;
+        }
     }
 `;

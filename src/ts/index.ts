@@ -53,6 +53,8 @@ export type AddPostType = {
     title: string;
     slug: string;
     category: string;
+    status: string;
+    author: string;
 };
 
 export type FormType = SignInType | SignUpType | AddPostType;
@@ -112,9 +114,37 @@ export type NavbarLinksType = {
     name: string;
 };
 
-export type sidebarLinksType = {
+export type SidebarLinksType = {
     title: string;
     url: string;
     icon: string;
     onclick?: () => void;
+};
+
+export type DropdownProps = {
+    children: React.ReactNode;
+    placeholder?: string;
+};
+
+export type SearchProps = ComponentPropsWithoutRef<"input"> & {
+    placeholder?: string;
+};
+
+export type RadioProps = ComponentPropsWithoutRef<"input"> & {
+    checked?: boolean;
+    children: React.ReactNode;
+    control: any;
+    name: string;
+};
+
+export type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
+    checked?: boolean;
+    children: React.ReactNode;
+    control: any;
+    name: string;
+};
+
+export type DropdownContextType = {
+    onClick?: () => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };

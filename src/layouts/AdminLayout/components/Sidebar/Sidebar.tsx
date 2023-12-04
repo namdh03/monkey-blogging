@@ -6,10 +6,10 @@ import categoryIcon from "@assets/icons/category.svg";
 import userIcon from "@assets/icons/user.svg";
 import logoutIcon from "@assets/icons/logout.svg";
 import configs from "@configs/index";
-import { sidebarLinksType } from "@ts/index";
+import { SidebarLinksType } from "@ts/index";
 import { SidebarStyled } from "./Sidebar.styled";
 
-const sidebarLinks: sidebarLinksType[] = [
+const sidebarLinks: SidebarLinksType[] = [
     {
         title: "Dashboard",
         url: configs.routes.dashboard,
