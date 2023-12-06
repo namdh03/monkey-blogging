@@ -8,6 +8,7 @@ import Dropdown from "@components/Dropdown";
 import Option from "@components/Option";
 import Button from "@components/Button";
 import Upload from "@components/Upload";
+import Toggle from "@components/Toggle";
 import useUpload from "@hooks/useUpload";
 import { AddPostType } from "@ts/index";
 import { PostStatus } from "@utils/enum";
@@ -15,8 +16,19 @@ import { AddPostStyled } from "./AddPost.styled";
 
 const AddPost = () => {
     const { control, watch, setValue, handleSubmit, getValues } =
-        useForm<AddPostType>();
+        useForm<AddPostType>({
+            defaultValues: {
+                title: "",
+                slug: "",
+                category: "",
+                status: PostStatus.PENDING,
+                author: "",
+                image: "",
+                top: false,
+            },
+        });
     const watchStatus = watch("status");
+    const watchTop = watch("top");
     const { image, progress, onSelectFile, onDelete } = useUpload(
         setValue,
         getValues
@@ -129,6 +141,14 @@ const AddPost = () => {
                             <Option>Nature</Option>
                             <Option>Developer</Option>
                         </Dropdown>
+                    </Field>
+
+                    <Field>
+                        <Label htmlFor="top">Top</Label>
+                        <Toggle
+                            on={watchTop}
+                            onClick={() => setValue("top", !watchTop)}
+                        />
                     </Field>
                 </div>
 

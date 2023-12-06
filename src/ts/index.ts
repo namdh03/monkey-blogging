@@ -56,6 +56,7 @@ export type AddPostType = {
     status: number;
     author: string;
     image: string;
+    top: boolean;
 };
 
 export type FormType = SignInType | SignUpType | AddPostType;
@@ -154,4 +155,8 @@ export type UploadProps = ComponentPropsWithoutRef<"input"> & {
     progress: number;
     image: string;
     onDelete: () => void;
+};
+
+export type ToggleProps = ComponentPropsWithoutRef<"div"> & {
+    on: boolean;
 };
