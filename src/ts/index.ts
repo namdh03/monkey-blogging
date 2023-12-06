@@ -53,8 +53,9 @@ export type AddPostType = {
     title: string;
     slug: string;
     category: string;
-    status: string;
+    status: number;
     author: string;
+    image: string;
 };
 
 export type FormType = SignInType | SignUpType | AddPostType;
@@ -133,18 +134,24 @@ export type SearchProps = ComponentPropsWithoutRef<"input"> & {
 export type RadioProps = ComponentPropsWithoutRef<"input"> & {
     checked?: boolean;
     children: React.ReactNode;
-    control: any;
-    name: string;
+    control: Control<AddPostType>;
+    name: keyof AddPostType;
 };
 
 export type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
     checked?: boolean;
     children: React.ReactNode;
-    control: any;
-    name: string;
+    control: Control<AddPostType>;
+    name: keyof AddPostType;
 };
 
 export type DropdownContextType = {
     onClick?: () => void;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type UploadProps = ComponentPropsWithoutRef<"input"> & {
+    progress: number;
+    image: string;
+    onDelete: () => void;
 };

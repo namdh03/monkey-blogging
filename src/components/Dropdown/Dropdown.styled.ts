@@ -10,10 +10,15 @@ export const DropdownStyled = styled.div`
         padding: 25px 20px 25px 27px;
         justify-content: space-between;
         align-items: center;
-        border-radius: 0.25rem;
+        border-radius: 8px;
         font-weight: 500;
         cursor: pointer;
-        background: #e7ecf3;
+        background: ${(props) => props.theme.whiteColor};
+        border: 1px solid ${(props) => props.theme.inputBorderColor};
+        
+        &:hover {
+            border-color: ${(props) => props.theme.inputBorderHoverColor};
+        }
     }
 
     .dropdown__icon {

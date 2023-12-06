@@ -27,6 +27,7 @@ const Input: FC<InputProps> = ({
                 {...field}
                 {...props}
             />
+
             {icon && (
                 <img src={icon.src} onClick={icon.onClick} className="icon" />
             )}
