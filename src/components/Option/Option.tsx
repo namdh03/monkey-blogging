@@ -1,11 +1,16 @@
-import { FC, PropsWithChildren } from "react";
-import useDropdown from "@hooks/useDropdown";
+import { FC } from "react";
+import { useDropdown } from "@hooks/index";
+import { OptionProps } from "@ts/index";
 import { OptionStyled } from "./Option.styled";
 
-const Option: FC<PropsWithChildren> = ({ children }) => {
-    const { onClick } = useDropdown();
+const Option: FC<OptionProps> = ({ children, onClick }) => {
+    const { setShow } = useDropdown();
+    const handleClick = () => {
+        onClick();
+        setShow(false);
+    };
 
-    return <OptionStyled onClick={onClick}>{children}</OptionStyled>;
+    return <OptionStyled onClick={handleClick}>{children}</OptionStyled>;
 };
 
 export default Option;

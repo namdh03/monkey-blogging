@@ -52,11 +52,10 @@ export type SignUpType = SignInType & {
 export type AddPostType = {
     title: string;
     slug: string;
-    category: string;
+    categoryId: string;
     status: number;
-    author: string;
     image: string;
-    top: boolean;
+    top: number;
 };
 
 export type FormType = SignInType | SignUpType | AddPostType;
@@ -123,11 +122,6 @@ export type SidebarLinksType = {
     onclick?: () => void;
 };
 
-export type DropdownProps = {
-    children: React.ReactNode;
-    placeholder?: string;
-};
-
 export type SearchProps = ComponentPropsWithoutRef<"input"> & {
     placeholder?: string;
 };
@@ -147,7 +141,9 @@ export type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
 };
 
 export type DropdownContextType = {
-    onClick?: () => void;
+    show: boolean;
+    setShow: React.Dispatch<React.SetStateAction<boolean>>;
+    toggle: () => void;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -158,5 +154,21 @@ export type UploadProps = ComponentPropsWithoutRef<"input"> & {
 };
 
 export type ToggleProps = ComponentPropsWithoutRef<"div"> & {
-    on: boolean;
+    on: number;
+};
+
+export type CategoryType = {
+    id: string;
+    name: string;
+    slug: string;
+    status: number;
+};
+
+export type SelectProps = ComponentPropsWithoutRef<"div"> & {
+    placeholder: string;
+};
+
+export type OptionProps = {
+    children: React.ReactNode;
+    onClick: () => void;
 };

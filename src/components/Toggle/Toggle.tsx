@@ -8,7 +8,7 @@ const Toggle: FC<ToggleProps> = ({ on, onClick, ...rest }) => {
             <label>
                 <input
                     type="checkbox"
-                    checked={on}
+                    checked={on === 1}
                     className="hidden-input"
                     onChange={() => {}}
                     onClick={onClick}

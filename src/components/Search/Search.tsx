@@ -1,5 +1,5 @@
 import { FC } from "react";
-import useDropdown from "@hooks/useDropdown";
+import { useDropdown } from "@hooks/index";
 import { SearchProps } from "@ts/index";
 import { SearchStyled } from "./Search.styled";
 

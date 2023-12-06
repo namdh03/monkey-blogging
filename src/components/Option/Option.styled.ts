@@ -2,15 +2,14 @@ import styled from "styled-components";
 
 export const OptionStyled = styled.div`
     display: flex;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 25px 20px 25px 27px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
     cursor: pointer;
 
-    :hover {
+    &:hover {
         background-color: #f3f4f6;
     }
 `;

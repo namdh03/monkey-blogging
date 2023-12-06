@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const ToggleStyled = styled.div<{ $on: boolean }>`
+export const ToggleStyled = styled.div<{ $on: number }>`
     .toggle {
         display: inline-block;
         position: relative;
@@ -15,7 +15,7 @@ export const ToggleStyled = styled.div<{ $on: boolean }>`
         background-color: #d1d5db;
 
         ${(props) =>
-            props.$on &&
+            props.$on === 1 &&
             css`
                 background-color: #10b981;
             `};
@@ -29,9 +29,9 @@ export const ToggleStyled = styled.div<{ $on: boolean }>`
             transition-duration: 300ms;
             width: 34px;
             height: 34px;
-            
+
             ${(props) =>
-                props.$on &&
+                props.$on === 1 &&
                 css`
                     transform: translateX(31px);
                 `};

@@ -1,14 +1,19 @@
 import { DropdownContextType } from "@ts/index";
-import { FC, PropsWithChildren, createContext } from "react";
+import { FC, PropsWithChildren, createContext, useState } from "react";
 
-const DropdownContext = createContext<DropdownContextType>({});
+const DropdownContext = createContext<DropdownContextType>({
+    show: false,
+    setShow: () => {},
+    toggle: () => {},
+});
 
-const DropdownProvider: FC<PropsWithChildren & DropdownContextType> = ({
-    children,
-    ...props
-}) => {
+const DropdownProvider: FC<PropsWithChildren> = ({ children }) => {
+    const [show, setShow] = useState<boolean>(false);
+    const toggle = () => setShow(!show);
+    const values = { show, setShow, toggle };
+
     return (
-        <DropdownContext.Provider value={props}>
+        <DropdownContext.Provider value={values}>
             {children}
         </DropdownContext.Provider>
     );
