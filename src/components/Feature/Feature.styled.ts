@@ -33,6 +33,7 @@ export const FeatureStyled = styled.article`
         &-top {
             display: flex;
             justify-content: space-between;
+            gap: 16px;
             align-items: center;
             margin-bottom: 16px;
         }

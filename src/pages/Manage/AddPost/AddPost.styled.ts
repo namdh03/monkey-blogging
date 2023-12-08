@@ -17,4 +17,14 @@ export const AddPostStyled = styled.section`
         column-gap: 1.25rem;
         align-items: center;
     }
+
+    .tag {
+        display: inline-block;
+        padding: 16px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #059669;
+        background-color: #ecfdf5;
+    }
 `;

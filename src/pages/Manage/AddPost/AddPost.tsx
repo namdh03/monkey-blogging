@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    getDocs,
+    query,
+    where,
+} from "firebase/firestore";
+import { toast } from "react-toastify";
 import Field from "@components/Field";
 import Label from "@components/Label";
 import Input from "@components/Input";
@@ -14,13 +21,15 @@ import Toggle from "@components/Toggle";
 import Select from "@components/Select";
 import List from "@components/List/List";
 import configs from "@configs/index";
-import { useUpload } from "@hooks/index";
+import { useAuth, useUpload } from "@hooks/index";
 import { AddPostType, CategoryType } from "@ts/index";
 import { PostStatus } from "@utils/enum";
 import { AddPostStyled } from "./AddPost.styled";
 
 const AddPost = () => {
-    const { control, watch, setValue, handleSubmit, getValues } =
+    const { user } = useAuth();
+
+    const { control, watch, setValue, handleSubmit, getValues, reset } =
         useForm<AddPostType>({
             defaultValues: {
                 title: "",
@@ -38,6 +47,7 @@ const AddPost = () => {
         getValues
     );
     const [categories, setCategories] = useState<CategoryType[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<CategoryType>();
 
     useEffect(() => {
         (async () => {
@@ -57,14 +67,31 @@ const AddPost = () => {
         })();
     }, []);
 
-    const handleAddPost = (values: AddPostType) => {
+    const handleAddPost = async (values: AddPostType) => {
         const post = {
             ...values,
             status: Number(values.status),
-            slug: slugify(values.slug || values.title),
+            slug: slugify(values.slug || values.title, { lower: true }),
         };
 
-        console.log(post);
+        try {
+            const cofRef = collection(configs.firebase.db, "posts");
+            await addDoc(cofRef, {
+                ...post,
+                url: image,
+                userId: user?.uid,
+            });
+            toast.success("Add new post successfully!");
+            reset();
+            setSelectedCategory(undefined);
+        } catch (error) {
+            toast.error("Add new post failed!");
+        }
+    };
+
+    const handleSelectOption = (category: CategoryType) => {
+        setValue("categoryId", category.id);
+        setSelectedCategory(category);
     };
 
     return (
@@ -109,17 +136,19 @@ const AddPost = () => {
                     <Field>
                         <Label htmlFor="category">Category</Label>
                         <Dropdown>
-                            <Select placeholder="Select the category" />
+                            <Select
+                                placeholder={`${
+                                    selectedCategory?.name ||
+                                    "Select the category"
+                                }`}
+                            />
                             <List>
                                 {categories.length > 0 &&
                                     categories.map((category) => (
                                         <Option
                                             key={category.id}
                                             onClick={() =>
-                                                setValue(
-                                                    "categoryId",
-                                                    category.id
-                                                )
+                                                handleSelectOption(category)
                                             }
                                         >
                                             {category.name}
@@ -127,6 +156,9 @@ const AddPost = () => {
                                     ))}
                             </List>
                         </Dropdown>
+                        {selectedCategory?.name && (
+                            <span className="tag">{selectedCategory.name}</span>
+                        )}
                     </Field>
                 </div>
 

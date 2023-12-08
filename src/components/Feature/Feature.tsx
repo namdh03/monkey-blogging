@@ -1,14 +1,50 @@
+import { FC, useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
 import configs from "@configs/index";
 import Category from "@components/Category";
 import Title from "@components/Title";
 import Meta from "@components/Meta";
 import Image from "@components/Image";
+import { AddPostType, CategoryType, UserType } from "@ts/index";
 import { FeatureStyled } from "./Feature.styled";
 
-const Feature = () => {
+const Feature: FC<{ data: AddPostType }> = ({ data }) => {
+    const [category, setCategory] = useState<CategoryType>();
+    const [user, setUser] = useState<UserType>();
+
+    // Get category
+    useEffect(() => {
+        if (!data.categoryId) return;
+
+        (async () => {
+            const docRef = doc(
+                configs.firebase.db,
+                "categories",
+                data.categoryId
+            );
+            const docSnap = await getDoc(docRef);
+
+            setCategory(docSnap.data() as CategoryType);
+        })();
+    }, [data.categoryId]);
+
+    // Get user
+    useEffect(() => {
+        if (!data.userId) return;
+
+        (async () => {
+            const docRef = doc(configs.firebase.db, "users", data.userId);
+            const docSnap = await getDoc(docRef);
+
+            setUser(docSnap.data() as UserType);
+        })();
+    }, [data.userId]);
+
+    console.log(user);
+
     return (
         <FeatureStyled>
-            <Image url="https://images.unsplash.com/photo-1614624532983-4ce03382d63d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2662&q=80" />
+            <Image url={data.url} />
             <div className="post-overlay"></div>
             <div className="post-content">
                 <div className="post-top">
@@ -17,16 +53,16 @@ const Feature = () => {
                         variant="primary"
                         className="post-category"
                     >
-                        Kiến thức
+                        {category && category.name}
                     </Category>
                     <Meta
                         time="Mar 23"
-                        author="Andiez Le"
+                        author={user && user.fullname}
                         className="post-info"
                     />
                 </div>
                 <Title to={configs.routes.home} size="large">
-                    Hướng dẫn setup phòng cực chill dành cho người mới toàn tập
+                    {data.title}
                 </Title>
             </div>
         </FeatureStyled>

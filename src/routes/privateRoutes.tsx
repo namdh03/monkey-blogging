@@ -1,11 +1,16 @@
 import configs from "@configs/index";
+import AuthGuard from "@/guards/AuthGuard";
 import AdminLayout from "@layouts/AdminLayout";
 import Dashboard from "@pages/Dashboard";
 import Manage from "@pages/Manage";
 
 const privateRoutes = [
     {
-        element: <AdminLayout />,
+        element: (
+            <AuthGuard>
+                <AdminLayout />
+            </AuthGuard>
+        ),
         children: [
             {
                 path: configs.routes.dashboard,

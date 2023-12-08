@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import eye from "@assets/icons/eye.svg";
 import eyeSlash from "@assets/icons/eye-slash.svg";
 import Field from "@components/Field";
@@ -51,7 +51,7 @@ const SignUp: FC = () => {
                 pauseOnHover: false,
             });
 
-            await addDoc(colRef, {
+            await setDoc(doc(colRef, configs.firebase.auth.currentUser?.uid), {
                 fullname: values.fullname,
                 email: values.email,
             });

@@ -1,13 +1,12 @@
 import { FC, PropsWithChildren } from "react";
-import { Navigate } from "react-router-dom";
-import configs from "@configs/index";
 import { useAuth } from "@hooks/index";
+import NotFound from "@pages/NotFound";
 
 const AuthGuard: FC<PropsWithChildren> = ({ children }) => {
     const { isInitialized, isAuthenticated } = useAuth();
 
     if (!isInitialized) return <div>Loading</div>;
-    if (isAuthenticated) return <Navigate to={configs.routes.signIn} />;
+    if (!isAuthenticated) return <NotFound />;
 
     return <>{children}</>;
 };

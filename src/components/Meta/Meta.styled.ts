@@ -6,6 +6,14 @@ export const MetaStyled = styled.div`
     gap: 12px;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1.5;
+
+    > * {
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
     .dot {
         display: inline-block;

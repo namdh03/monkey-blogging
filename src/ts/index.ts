@@ -50,12 +50,15 @@ export type SignUpType = SignInType & {
 };
 
 export type AddPostType = {
+    id: string;
+    userId: string;
     title: string;
     slug: string;
     categoryId: string;
     status: number;
     image: string;
     top: number;
+    url: string;
 };
 
 export type FormType = SignInType | SignUpType | AddPostType;
@@ -101,8 +104,8 @@ export type TitleProps = ComponentPropsWithoutRef<"h3"> & {
 };
 
 export type MetaProps = {
-    time: string;
-    author: string;
+    time?: string;
+    author?: string;
     className?: string;
 };
 
@@ -171,4 +174,9 @@ export type SelectProps = ComponentPropsWithoutRef<"div"> & {
 export type OptionProps = {
     children: React.ReactNode;
     onClick: () => void;
+};
+
+export type UserType = {
+    fullname: string;
+    email: string;
 };

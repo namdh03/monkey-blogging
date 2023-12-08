@@ -21,7 +21,6 @@ const Upload = (props: UploadProps) => {
                         type="file"
                         name={name}
                         className="hidden-input"
-                        onChange={() => {}}
                         {...rest}
                     />
 
