@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, Dispatch } from "react";
 import { Control } from "react-hook-form";
 import { User } from "firebase/auth";
+import { Timestamp } from "firebase/firestore";
 import { AuthActionType, Role } from "@utils/enum";
 
 export type AuthState = {
@@ -59,6 +60,7 @@ export type AddPostType = {
     image: string;
     top: number;
     url: string;
+    createdAt: Timestamp;
 };
 
 export type FormType = SignInType | SignUpType | AddPostType;
@@ -90,7 +92,7 @@ export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
 export type VariantType = "primary" | "secondary" | "default" | "text";
 
 export type CategoryProps = ComponentPropsWithoutRef<"span"> & {
-    to: string;
+    to?: string;
     children: React.ReactNode;
     variant?: VariantType;
 };

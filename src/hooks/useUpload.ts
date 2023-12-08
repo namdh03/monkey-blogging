@@ -23,6 +23,12 @@ export default function useUpload(
         handleUploadImage(file);
     };
 
+    const onReset = () => {
+        setValue("image", "");
+        setImage("");
+        setProgress(0);
+    }
+
     const handleUploadImage = async (file: File) => {
         const storage = getStorage();
 
@@ -104,6 +110,7 @@ export default function useUpload(
     return {
         progress,
         image,
+        onReset,
         onSelectFile,
         onDelete,
     };

@@ -6,6 +6,7 @@ import {
     collection,
     getDocs,
     query,
+    serverTimestamp,
     where,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -28,7 +29,6 @@ import { AddPostStyled } from "./AddPost.styled";
 
 const AddPost = () => {
     const { user } = useAuth();
-
     const { control, watch, setValue, handleSubmit, getValues, reset } =
         useForm<AddPostType>({
             defaultValues: {
@@ -42,10 +42,11 @@ const AddPost = () => {
         });
     const watchStatus = watch("status");
     const watchTop = watch("top");
-    const { image, progress, onSelectFile, onDelete } = useUpload(
+    const { image, progress, onReset, onSelectFile, onDelete } = useUpload(
         setValue,
         getValues
     );
+    const [loading, setLoading] = useState<boolean>(false);
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>();
 
@@ -68,24 +69,30 @@ const AddPost = () => {
     }, []);
 
     const handleAddPost = async (values: AddPostType) => {
-        const post = {
-            ...values,
-            status: Number(values.status),
-            slug: slugify(values.slug || values.title, { lower: true }),
-        };
-
         try {
+            setLoading(true);
+
+            const post = {
+                ...values,
+                status: Number(values.status),
+                slug: slugify(values.slug || values.title, { lower: true }),
+            };
+
             const cofRef = collection(configs.firebase.db, "posts");
             await addDoc(cofRef, {
                 ...post,
                 url: image,
                 userId: user?.uid,
+                createdAt: serverTimestamp(),
             });
             toast.success("Add new post successfully!");
             reset();
+            onReset();
             setSelectedCategory(undefined);
         } catch (error) {
             toast.error("Add new post failed!");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -210,7 +217,12 @@ const AddPost = () => {
                     </Field>
                 </div>
 
-                <Button variant="secondary" type="submit" className="mx-auto">
+                <Button
+                    variant="secondary"
+                    type="submit"
+                    className="mx-auto"
+                    isLoading={loading}
+                >
                     Add new post
                 </Button>
             </form>

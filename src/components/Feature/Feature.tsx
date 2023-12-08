@@ -40,8 +40,6 @@ const Feature: FC<{ data: AddPostType }> = ({ data }) => {
         })();
     }, [data.userId]);
 
-    console.log(user);
-
     return (
         <FeatureStyled>
             <Image url={data.url} />
@@ -49,14 +47,16 @@ const Feature: FC<{ data: AddPostType }> = ({ data }) => {
             <div className="post-content">
                 <div className="post-top">
                     <Category
-                        to={configs.routes.home}
+                        to={category?.slug}
                         variant="primary"
                         className="post-category"
                     >
                         {category && category.name}
                     </Category>
                     <Meta
-                        time="Mar 23"
+                        time={new Date(
+                            data.createdAt.seconds * 1000
+                        ).toLocaleDateString("vi-VN")}
                         author={user && user.fullname}
                         className="post-info"
                     />
