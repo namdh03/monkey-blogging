@@ -6,6 +6,7 @@ import NotFound from "@pages/NotFound";
 import Home from "@pages/Home";
 import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
+import Blog from "@pages/Blog";
 
 const publicRoutes = [
     {
@@ -14,6 +15,10 @@ const publicRoutes = [
             {
                 path: configs.routes.home,
                 element: <Home />,
+            },
+            {
+                path: configs.routes.blog,
+                element: <Blog />,
             },
         ],
     },

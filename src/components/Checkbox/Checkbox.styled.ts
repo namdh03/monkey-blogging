@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const CheckboxStyled = styled.div<{ $isChecked: boolean }>`
     display: flex;
-    column-gap: 0.75rem;
+    column-gap: 12px;
     align-items: center;
     font-weight: 500;
     cursor: pointer;
@@ -11,9 +11,9 @@ export const CheckboxStyled = styled.div<{ $isChecked: boolean }>`
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 0.25rem;
-        width: 1.5rem;
-        height: 1.5rem;
+        border-radius: 4px;
+        width: 24px;
+        height: 24px;
         color: transparent;
         background-color: #e5e7eb;
 
@@ -26,7 +26,7 @@ export const CheckboxStyled = styled.div<{ $isChecked: boolean }>`
     }
 
     .icon {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 24px;
+        height: 24px;
     }
 `;

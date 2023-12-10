@@ -24,6 +24,7 @@ const Checkbox: FC<CheckboxProps> = ({
                 className="hidden-input"
                 {...field}
                 {...rest}
+                value={field.value.toString()}
             />
             <CheckboxStyled $isChecked={checked}>
                 <div className="checkbox">

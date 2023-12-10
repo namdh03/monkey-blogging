@@ -1,20 +1,30 @@
-import Pagination from "@components/Pagination";
+import Dropdown from "@components/Dropdown";
+import Select from "@components/Select";
 import Table from "@components/Table";
+import Button from "@components/Button";
+import Heading from "../Heading";
 import { PostStyled } from "./Post.styled";
 
 const Post = () => {
     return (
         <PostStyled>
-            <h1 className="dashboard-heading">Manage post</h1>
-            <div className="search">
-                <div className="search__input-wrapper">
+            <Heading title="All posts" subtitle="Manage all posts" />
+
+            <div className="post__heading">
+                <div className="post__category">
+                    <Dropdown>
+                        <Select placeholder="Category" />
+                    </Dropdown>
+                </div>
+                <div className="post__search">
                     <input
                         type="text"
-                        className="search__input"
+                        className="post__search-input"
                         placeholder="Search post..."
                     />
                 </div>
             </div>
+
             <Table>
                 <thead>
                     <tr>
@@ -31,17 +41,15 @@ const Post = () => {
                         <td></td>
                         <td>01</td>
                         <td>
-                            <div className="post">
+                            <div className="post__image">
                                 <img
                                     src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"
                                     alt=""
-                                    className="post__img"
+                                    className="post__image-img"
                                 />
-                                <div className="post__content">
-                                    <h3 className="font-semibold">
-                                        One Special 4K Camera
-                                    </h3>
-                                    <time className="post__date post__text">
+                                <div className="post__desc">
+                                    <h3>One Special 4K Camera</h3>
+                                    <time className="post__text">
                                         Date: 25 Oct 2021
                                     </time>
                                 </div>
@@ -54,11 +62,10 @@ const Post = () => {
                             <span className="post__text">Evondev</span>
                         </td>
                         <td>
-                            <div className="actions post__text">
-                                <span className="actions__item">
+                            <div className="post__actions post__text">
+                                <span className="post__icon">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-5 h-5"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -76,10 +83,9 @@ const Post = () => {
                                         />
                                     </svg>
                                 </span>
-                                <span className="actions__item">
+                                <span className="post__icon">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-5 h-5"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -92,10 +98,9 @@ const Post = () => {
                                         />
                                     </svg>
                                 </span>
-                                <span className="actions__item">
+                                <span className="post__icon">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-5 h-5"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -113,8 +118,11 @@ const Post = () => {
                     </tr>
                 </tbody>
             </Table>
-            <div className="pagination">
-                <Pagination></Pagination>
+
+            <div className="post__pagination">
+                <Button variant="default" className="post__btn">
+                    See more+
+                </Button>
             </div>
         </PostStyled>
     );

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SelectStyled = styled.div`
     .dropdown__wrapper {
         display: flex;
-        padding: 25px 20px 25px 27px;
+        padding: 12px 25px;
         justify-content: space-between;
         align-items: center;
         border-radius: 8px;
@@ -15,10 +15,14 @@ export const SelectStyled = styled.div`
         &:hover {
             border-color: ${(props) => props.theme.inputBorderHoverColor};
         }
+        
+        span:last-child {
+            height: 24px;
+        }
     }
 
     .dropdown__icon {
-        width: 2.4rem;
-        height: 2.4rem;
+        width: 24px;
+        height: 24px;
     }
 `;

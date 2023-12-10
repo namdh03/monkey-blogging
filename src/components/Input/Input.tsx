@@ -26,6 +26,7 @@ const Input: FC<InputProps> = ({
                 placeholder={placeholder}
                 {...field}
                 {...props}
+                value={field.value.toString()}
             />
 
             {icon && (

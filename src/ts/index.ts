@@ -182,3 +182,8 @@ export type UserType = {
     fullname: string;
     email: string;
 };
+
+export type AdminHeadingProps = {
+    title: string;
+    subtitle: string;
+};

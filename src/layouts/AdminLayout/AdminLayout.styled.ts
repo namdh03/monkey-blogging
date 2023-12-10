@@ -5,6 +5,18 @@ export const DashboardStyled = styled.section`
     margin: 0 auto;
 
     .dashboard {
+        &-heading {
+            font-weight: bold;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: ${(props) => props.theme.black};
+        }
+
+        &-short-desc {
+            font-size: 1.4rem;
+            color: ${(props) => props.theme.gray80};
+        }
+
         &-main {
             display: grid;
             grid-template-columns: 300px minmax(0, 1fr);
@@ -13,12 +25,15 @@ export const DashboardStyled = styled.section`
             align-items: start;
         }
 
-        &-heading {
-            font-weight: bold;
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: ${(props) => props.theme.primaryColor};
-            letter-spacing: 1px;
+        @media screen and (max-width: 1023.98px) {
+            &-heading {
+                font-size: 2rem;
+            }
+            
+            &-main {
+                grid-template-columns: 100%;
+                padding: 20px;
+            }
         }
     }
 `;

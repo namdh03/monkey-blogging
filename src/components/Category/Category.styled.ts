@@ -5,7 +5,7 @@ export const CategoryStyled = styled.article<{ $variant: VariantType }>`
     display: inline-block;
     padding: 8px 12px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 600;
     color: #6b6b6b;
 

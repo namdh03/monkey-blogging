@@ -24,6 +24,7 @@ const Radio: FC<RadioProps> = ({
                 className="hidden-input"
                 {...field}
                 {...rest}
+                value={field.value.toString()}
             />
             <RadioStyled $isChecked={checked}>
                 <div className="radio"></div>

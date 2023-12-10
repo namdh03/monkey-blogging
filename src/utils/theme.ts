@@ -17,6 +17,7 @@ const theme = {
     categoryDefaultBgColor: "#fff",
     categoryPrimaryBgColor: "#F3EDFF",
     gray80: "#808191",
+    grayF3: "#F3EDFF",
 };
 
 export default theme;

@@ -4,7 +4,7 @@ export const MetaStyled = styled.div`
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 600;
     line-height: 1.5;
 
@@ -20,6 +20,6 @@ export const MetaStyled = styled.div`
         width: 4px;
         height: 4px;
         background-color: currentColor;
-        border-radius: 100rem;
+        border-radius: 999px;
     }
 `;

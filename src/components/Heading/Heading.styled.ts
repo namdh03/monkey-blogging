@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeadingStyled = styled.h2`
     color: ${(props) => props.theme.tertiary};
-    font-size: 28px;
+    font-size: 2.8rem;
     position: relative;
     margin-bottom: 30px;
     font-weight: 600;

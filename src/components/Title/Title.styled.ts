@@ -10,18 +10,18 @@ export const TitleStyled = styled.h3<{ $size: SizeType }>`
     ${(props) =>
         props.$size === "large" &&
         css`
-            font-size: 22px;
+            font-size: 2.2rem;
         `};
 
     ${(props) =>
         props.$size === "medium" &&
         css`
-            font-size: 18px;
+            font-size: 1.8rem;
         `};
 
     ${(props) =>
         props.$size === "small" &&
         css`
-            font-size: 16px;
+            font-size: 1.6rem;
         `};
 `;

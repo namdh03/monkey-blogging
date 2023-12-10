@@ -15,7 +15,7 @@ export const HeaderStyled = styled.header`
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 100rem;
+            border-radius: 999px;
         }
     }
 `;

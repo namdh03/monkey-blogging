@@ -1,72 +1,99 @@
 import styled from "styled-components";
 
 export const PostStyled = styled.section`
-    .search {
-        display: flex;
-        margin-bottom: 2.5rem;
-        justify-content: flex-end;
+    .post {
+        &__heading {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 20px;
+            justify-content: flex-end;
+        }
 
-        &__input-wrapper {
+        &__category {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        &__search {
             width: 100%;
             max-width: 300px;
         }
 
-        &__input {
-            padding: 1rem;
-            border-radius: 0.5rem;
+        &__search-input {
+            padding: 16px;
+            border-radius: 8px;
             border-width: 1px;
             border-color: #d1d5db;
             border-style: solid;
             width: 100%;
+            outline: none;
+
+            &:focus {
+                border-color: ${(props) => props.theme.inputBorderHoverColor};
+            }
         }
-    }
 
-    .post {
-        display: flex;
-        column-gap: 0.75rem;
-        align-items: center;
+        &__image {
+            display: flex;
+            column-gap: 12px;
+            align-items: center;
+        }
 
-        &__img {
+        &__image-img {
             object-fit: cover;
-            border-radius: 0.25rem;
+            border-radius: 4px;
             width: 66px;
             height: 55px;
         }
 
-        &__content {
+        &__desc {
             flex: 1 1 0%;
-        }
 
-        &__date {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 1.4rem;
+            h3 {
+                font-weight: 600;
+            }
+
+            time {
+                font-size: 1.4rem;
+                line-height: 1.4;
+            }
         }
 
         &__text {
             color: #6b7280;
         }
-    }
 
-    .actions {
-        display: flex;
-        column-gap: 0.75rem;
-        align-items: center;
+        &__actions {
+            display: flex;
+            column-gap: 12px;
+            align-items: center;
+        }
 
-        &__item {
+        &__icon {
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 0.25rem;
-            border-width: 1px;
-            border-color: #e5e7eb;
-            width: 2.5rem;
-            height: 2.5rem;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            width: 40px;
+            height: 40px;
             cursor: pointer;
-        }
-    }
 
-    .pagination {
-        margin-top: 2.5rem;
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &__pagination {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        &__btn {
+            width: 200px;
+            background-color: rgba(29, 192, 113, 0.1);
+        }
     }
 `;

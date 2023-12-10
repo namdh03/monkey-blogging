@@ -1,5 +1,7 @@
+import Heading from "@pages/Manage/Heading";
+
 const Dashboard = () => {
-    return <h1 className="dashboard-heading">Dashboard page</h1>;
+    return <Heading title="Dashboard" subtitle="Overview dashboard monitor" />;
 };
 
 export default Dashboard;

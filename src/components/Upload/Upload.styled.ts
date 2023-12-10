@@ -5,7 +5,7 @@ export const UploadStyled = styled.label`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0.5rem;
+    border-radius: 4px;
     border: 1px solid ${(props) => props.theme.inputBorderColor};
     width: 100%;
     height: 250px;
@@ -22,7 +22,7 @@ export const UploadStyled = styled.label`
     }
 
     .none-image {
-        margin-bottom: 1.25rem;
+        margin-bottom: 20px;
         max-width: 80px;
     }
 
@@ -40,8 +40,8 @@ export const UploadStyled = styled.label`
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 2.5rem;
-        height: 0.25rem;
+        width: 40px;
+        height: 4px;
         background-color: #34d399;
         transition-property: all;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -55,9 +55,9 @@ export const UploadStyled = styled.label`
         z-index: 10;
         justify-content: center;
         align-items: center;
-        border-radius: 9999px;
-        width: 4rem;
-        height: 4rem;
+        border-radius: 999px;
+        width: 64px;
+        height: 64px;
         color: #ef4444;
         background-color: #ffffff;
         transition-property: all;
