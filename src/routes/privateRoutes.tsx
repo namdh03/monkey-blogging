@@ -3,6 +3,7 @@ import AuthGuard from "@/guards/AuthGuard";
 import AdminLayout from "@layouts/AdminLayout";
 import Dashboard from "@pages/Dashboard";
 import Manage from "@pages/Manage";
+import Profile from "@pages/Profile";
 
 const privateRoutes = [
     {
@@ -23,6 +24,22 @@ const privateRoutes = [
             {
                 path: configs.routes.addPost,
                 element: <Manage.AddPost />,
+            },
+            {
+                path: configs.routes.manageCategory,
+                element: <Manage.Category />,
+            },
+            {
+                path: configs.routes.addCategory,
+                element: <Manage.AddCategory />,
+            },
+            {
+                path: configs.routes.manageUser,
+                element: <Manage.User />,
+            },
+            {
+                path: configs.routes.profile,
+                element: <Profile />,
             },
         ],
     },

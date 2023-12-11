@@ -15,6 +15,10 @@ export const AuthenticationPageStyled = styled.section`
     .form {
         margin: 107px auto 0;
         max-width: 800px;
+
+        div + div {
+            margin-top: 50px;
+        }
     }
 
     .question {

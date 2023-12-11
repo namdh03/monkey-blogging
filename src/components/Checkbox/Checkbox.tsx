@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useController } from "react-hook-form";
-import { CheckboxProps } from "@ts/index";
+import { Control, useController } from "react-hook-form";
+import { CheckboxProps, FormType } from "@ts/index";
 import { CheckboxStyled } from "./Checkbox.styled";
 
 const Checkbox: FC<CheckboxProps> = ({
@@ -11,7 +11,7 @@ const Checkbox: FC<CheckboxProps> = ({
     ...rest
 }) => {
     const { field } = useController({
-        control,
+        control: control as Control<FormType>,
         name,
         defaultValue: "",
     });
@@ -24,7 +24,7 @@ const Checkbox: FC<CheckboxProps> = ({
                 className="hidden-input"
                 {...field}
                 {...rest}
-                value={field.value.toString()}
+                value={rest.value?.toString()}
             />
             <CheckboxStyled $isChecked={checked}>
                 <div className="checkbox">

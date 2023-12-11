@@ -51,7 +51,7 @@ const Feature: FC<{ data: AddPostType }> = ({ data }) => {
                         variant="primary"
                         className="post-category"
                     >
-                        {category && category.name}
+                        {category && category.categoryName}
                     </Category>
                     <Meta
                         time={new Date(

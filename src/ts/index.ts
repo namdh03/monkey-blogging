@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, Dispatch } from "react";
 import { Control } from "react-hook-form";
-import { User } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
+import { User } from "firebase/auth";
 import { AuthActionType, Role } from "@utils/enum";
 
 export type AuthState = {
@@ -63,13 +63,45 @@ export type AddPostType = {
     createdAt: Timestamp;
 };
 
-export type FormType = SignInType | SignUpType | AddPostType;
+export type AddCategoryType = {
+    categoryName: string;
+    slug: string;
+    status: number;
+    createdAt: Timestamp;
+};
+
+export type ProfileType = {
+    fullname: string;
+    username: string;
+    birthday: string;
+    phone: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+};
+
+export type FormType =
+    | SignInType
+    | SignUpType
+    | AddPostType
+    | AddCategoryType
+    | ProfileType;
 
 export type InputProps = {
     id: string;
-    name: keyof SignInType | keyof SignUpType | keyof AddPostType;
+    name:
+        | keyof SignInType
+        | keyof SignUpType
+        | keyof AddPostType
+        | keyof AddCategoryType
+        | keyof ProfileType;
     type: string;
-    control: Control<SignInType> | Control<SignUpType> | Control<AddPostType>;
+    control:
+        | Control<SignInType>
+        | Control<SignUpType>
+        | Control<AddPostType>
+        | Control<AddCategoryType>
+        | Control<ProfileType>;
     placeholder?: string;
     icon?: IconProps;
 };
@@ -134,15 +166,15 @@ export type SearchProps = ComponentPropsWithoutRef<"input"> & {
 export type RadioProps = ComponentPropsWithoutRef<"input"> & {
     checked?: boolean;
     children: React.ReactNode;
-    control: Control<AddPostType>;
-    name: keyof AddPostType;
+    control: Control<AddPostType> | Control<AddCategoryType>;
+    name: keyof AddPostType | keyof AddCategoryType;
 };
 
 export type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
     checked?: boolean;
     children: React.ReactNode;
-    control: Control<AddPostType>;
-    name: keyof AddPostType;
+    control: Control<AddPostType> | Control<AddCategoryType>;
+    name: keyof AddPostType | keyof AddCategoryType;
 };
 
 export type DropdownContextType = {
@@ -164,7 +196,7 @@ export type ToggleProps = ComponentPropsWithoutRef<"div"> & {
 
 export type CategoryType = {
     id: string;
-    name: string;
+    categoryName: string;
     slug: string;
     status: number;
 };

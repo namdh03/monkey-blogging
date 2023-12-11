@@ -5,8 +5,4 @@ export const FieldStyled = styled.div`
     flex-direction: column;
     align-items: flex-start;
     row-gap: 19px;
-
-    & + & {
-        margin-top: 50px;
-    }
 `;

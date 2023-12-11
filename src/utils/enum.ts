@@ -14,3 +14,8 @@ export enum PostStatus {
     PENDING = 0,
     REJECTED = -1,
 }
+
+export enum CategoryStatus {
+    APPROVED = 1,
+    UN_APPROVED = 0,
+}

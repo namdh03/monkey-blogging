@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useController } from "react-hook-form";
-import { RadioProps } from "@ts/index";
+import { Control, useController } from "react-hook-form";
+import { FormType, RadioProps } from "@ts/index";
 import { RadioStyled } from "./Radio.styled";
 
 const Radio: FC<RadioProps> = ({
@@ -11,9 +11,9 @@ const Radio: FC<RadioProps> = ({
     ...rest
 }) => {
     const { field } = useController({
-        control,
+        control: control as Control<FormType>,
         name,
-        defaultValue: "",
+        defaultValue: 0,
     });
 
     return (
@@ -24,7 +24,7 @@ const Radio: FC<RadioProps> = ({
                 className="hidden-input"
                 {...field}
                 {...rest}
-                value={field.value.toString()}
+                value={rest.value?.toString()}
             />
             <RadioStyled $isChecked={checked}>
                 <div className="radio"></div>

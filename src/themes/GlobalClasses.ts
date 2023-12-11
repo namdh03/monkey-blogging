@@ -309,12 +309,17 @@ export const GlobalClasses = css`
 
     .form-layout {
         display: grid;
-        margin-bottom: 1.25rem;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
+        margin-bottom: 40px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 40px;
 
         @media (min-width: 1024px) {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             column-gap: 2.5rem;
+        }
+
+        & > * {
+            margin-top: 0;
         }
     }
 `;

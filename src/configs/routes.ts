@@ -7,9 +7,11 @@ const routes = {
     dashboard: "/dashboard",
     manage: "/manage",
     managePost: "/manage/post",
-    manageCategory: "/manage/category",
     manageUser: "/manage/user",
+    manageCategory: "/manage/category",
     addPost: "/manage/add-post",
+    addCategory: "/manage/add-category",
+    profile: "/profile",
     notFound: "*",
 };
 

@@ -25,6 +25,7 @@ import configs from "@configs/index";
 import { useAuth, useUpload } from "@hooks/index";
 import { AddPostType, CategoryType } from "@ts/index";
 import { PostStatus } from "@utils/enum";
+import Heading from "../Heading";
 import { AddPostStyled } from "./AddPost.styled";
 
 const AddPost = () => {
@@ -103,9 +104,9 @@ const AddPost = () => {
 
     return (
         <AddPostStyled>
-            <h1 className="dashboard-heading">Add new post</h1>
+            <Heading title="Add post" subtitle="Add new post" />
             <form onSubmit={handleSubmit(handleAddPost)}>
-                <div className="form__group">
+                <div className="form-layout">
                     <Field>
                         <Label htmlFor="title">Title</Label>
                         <Input
@@ -128,7 +129,7 @@ const AddPost = () => {
                     </Field>
                 </div>
 
-                <div className="form__group">
+                <div className="form-layout">
                     <Field>
                         <Label htmlFor="image">Image</Label>
                         <Upload
@@ -145,7 +146,7 @@ const AddPost = () => {
                         <Dropdown>
                             <Select
                                 placeholder={`${
-                                    selectedCategory?.name ||
+                                    selectedCategory?.categoryName ||
                                     "Select the category"
                                 }`}
                             />
@@ -158,18 +159,20 @@ const AddPost = () => {
                                                 handleSelectOption(category)
                                             }
                                         >
-                                            {category.name}
+                                            {category.categoryName}
                                         </Option>
                                     ))}
                             </List>
                         </Dropdown>
-                        {selectedCategory?.name && (
-                            <span className="tag">{selectedCategory.name}</span>
+                        {selectedCategory?.categoryName && (
+                            <span className="tag">
+                                {selectedCategory.categoryName}
+                            </span>
                         )}
                     </Field>
                 </div>
 
-                <div className="form__group">
+                <div className="form-layout">
                     <Field>
                         <Label htmlFor="top">Top</Label>
                         <Toggle
@@ -193,6 +196,7 @@ const AddPost = () => {
                             >
                                 Approved
                             </Radio>
+
                             <Radio
                                 name="status"
                                 control={control}
@@ -203,6 +207,7 @@ const AddPost = () => {
                             >
                                 Pending
                             </Radio>
+
                             <Radio
                                 name="status"
                                 control={control}
@@ -217,14 +222,16 @@ const AddPost = () => {
                     </Field>
                 </div>
 
-                <Button
-                    variant="secondary"
-                    type="submit"
-                    className="mx-auto"
-                    isLoading={loading}
-                >
-                    Add new post
-                </Button>
+                <div className="form__btn">
+                    <Button
+                        variant="secondary"
+                        type="submit"
+                        className="mx-auto"
+                        isLoading={loading}
+                    >
+                        Add new post
+                    </Button>
+                </div>
             </form>
         </AddPostStyled>
     );
