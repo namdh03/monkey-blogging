@@ -216,6 +216,18 @@ export type UserType = {
 };
 
 export type AdminHeadingProps = {
+    children?: React.ReactNode;
     title: string;
     subtitle: string;
+};
+
+export type TagVariantType = "success" | "info" | "warning" | "danger";
+
+export type TagType = {
+    children: React.ReactNode;
+    variant?: TagVariantType;
+};
+
+export type ActionType = {
+    onClick?: () => void;
 };

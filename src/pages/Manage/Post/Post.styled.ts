@@ -93,7 +93,6 @@ export const PostStyled = styled.section`
 
         &__btn {
             width: 200px;
-            background-color: rgba(29, 192, 113, 0.1);
         }
     }
 `;

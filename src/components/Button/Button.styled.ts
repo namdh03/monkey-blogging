@@ -30,7 +30,7 @@ export const ButtonStyled = styled.button<{
             color: #23bb86;
             font-size: 1.8rem;
             font-weight: 600;
-            background: ${props.theme.whiteColor};
+            background-color: rgba(29, 192, 113, 0.1);
         `};
 
     ${(props) =>
