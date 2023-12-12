@@ -211,8 +211,14 @@ export type OptionProps = {
 };
 
 export type UserType = {
+    id: string;
+    avatar: string;
     fullname: string;
     email: string;
+    createdAt: Timestamp;
+    username: string;
+    status: number;
+    role: string;
 };
 
 export type AdminHeadingProps = {
