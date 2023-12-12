@@ -12,6 +12,7 @@ const routes = {
     addPost: "/manage/add-post",
     addCategory: "/manage/add-category",
     profile: "/profile",
+    updateCategory: "/manage/update-category",
     notFound: "*",
 };
 

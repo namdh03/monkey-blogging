@@ -41,6 +41,10 @@ const privateRoutes = [
                 path: configs.routes.profile,
                 element: <Profile />,
             },
+            {
+                path: configs.routes.updateCategory,
+                element: <Manage.UpdateCategory />,
+            }
         ],
     },
 ];

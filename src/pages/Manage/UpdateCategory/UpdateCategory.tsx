@@ -1,57 +1,84 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import swal from "sweetalert";
 import { toast } from "react-toastify";
 import slugify from "slugify";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Field from "@components/Field";
 import Label from "@components/Label";
 import Input from "@components/Input";
 import Radio from "@components/Radio";
 import Button from "@components/Button";
 import configs from "@configs/index";
-import { CategoryStatus } from "@utils/enum";
 import { AddCategoryType } from "@ts/index";
+import { CategoryStatus } from "@utils/enum";
 import Heading from "../Heading";
 
-const AddCategory = () => {
-    const [loading, setLoading] = useState<boolean>(false);
+const UpdateCategory = () => {
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
     const { control, handleSubmit, watch, reset } = useForm<AddCategoryType>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const watchStatus = watch("status");
     const navigate = useNavigate();
 
-    const handleAddNewCategory = async (values: AddCategoryType) => {
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!id) return null;
+
+                setLoading(true);
+
+                const docRef = doc(configs.firebase.db, "categories", id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    reset(docSnap.data());
+                } else {
+                    // docSnap.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                swal("Failed!", "Something went wrong!", "error");
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [id, reset]);
+
+    const handleUpdateCategory = async (values: AddCategoryType) => {
         try {
+            if (!id) return null;
+
             setLoading(true);
 
-            const newValues = {
+            const colRef = doc(configs.firebase.db, "categories", id);
+
+            await updateDoc(colRef, {
                 ...values,
-                slug: slugify(values.categoryName || values.slug, {
+                status: Number(values.status),
+                slug: slugify(values.slug || values.categoryName, {
                     lower: true,
                 }),
-                status: Number(values.status),
-                createdAt: serverTimestamp(),
-            };
-            const colRef = collection(configs.firebase.db, "categories");
-
-            await addDoc(colRef, newValues);
-
-            reset();
-            navigate(configs.routes.manageCategory);
-            toast.success("Add new category successfully");
+            });
+            navigate(configs.routes.manageCategory)
+            toast.success("Update category successfully");
         } catch (error) {
-            toast.error("Add new category failed");
+            swal("Failed!", "Something went wrong!", "error");
         } finally {
             setLoading(false);
         }
     };
 
-    const watchStatus = watch("status");
-
     return (
         <section>
-            <Heading title="New category" subtitle="Add new category" />
+            <Heading
+                title="Update category"
+                subtitle={`Update your category - id: ${id}`}
+            />
 
-            <form onSubmit={handleSubmit(handleAddNewCategory)}>
+            <form onSubmit={handleSubmit(handleUpdateCategory)}>
                 <div className="form-layout">
                     <Field>
                         <Label htmlFor="categoryName">Name</Label>
@@ -103,12 +130,12 @@ const AddCategory = () => {
                     </Field>
                 </div>
 
-                <Button variant="primary" isLoading={loading}>
-                    Add new category
+                <Button variant="default" isLoading={loading}>
+                    Update category
                 </Button>
             </form>
         </section>
     );
 };
 
-export default AddCategory;
+export default UpdateCategory;
