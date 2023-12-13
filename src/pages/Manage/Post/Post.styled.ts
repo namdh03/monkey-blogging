@@ -70,22 +70,6 @@ export const PostStyled = styled.section`
             align-items: center;
         }
 
-        &__icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 4px;
-            border: 1px solid #e5e7eb;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-
-            svg {
-                width: 20px;
-                height: 20px;
-            }
-        }
-
         &__pagination {
             margin-top: 40px;
             text-align: center;

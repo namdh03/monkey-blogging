@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
 import {
@@ -30,6 +31,7 @@ import { AddPostStyled } from "./AddPost.styled";
 
 const AddPost = () => {
     const { user } = useAuth();
+    const navigate = useNavigate();
     const { control, watch, setValue, handleSubmit, getValues, reset } =
         useForm<AddPostType>({
             defaultValues: {
@@ -90,6 +92,7 @@ const AddPost = () => {
             reset();
             onReset();
             setSelectedCategory(undefined);
+            navigate(configs.routes.managePost);
         } catch (error) {
             toast.error("Add new post failed!");
         } finally {

@@ -1,11 +1,143 @@
+import { useEffect, useState } from "react";
+import {
+    DocumentData,
+    QueryDocumentSnapshot,
+    collection,
+    deleteDoc,
+    doc,
+    getDocs,
+    limit,
+    onSnapshot,
+    query,
+    startAfter,
+    where,
+} from "firebase/firestore";
+import swal from "sweetalert";
 import Dropdown from "@components/Dropdown";
 import Select from "@components/Select";
 import Table from "@components/Table";
 import Button from "@components/Button";
+import { Actions } from "@components/Actions";
+import Tag from "@components/Tag";
+import { useDebounce } from "@hooks/index";
+import configs from "@configs/index";
+import { AddPostType } from "@ts/index";
+import { PostStatus } from "@utils/enum";
 import Heading from "../Heading";
 import { PostStyled } from "./Post.styled";
 
 const Post = () => {
+    const [posts, setPosts] = useState<AddPostType[]>([]);
+    const [lastDoc, setLastDoc] =
+        useState<QueryDocumentSnapshot<DocumentData, DocumentData>>();
+    const [totalPage, setTotalPage] = useState<number>(0);
+    const [search, setSearch] = useState<string>("");
+    const searchDebounce = useDebounce(search, 500);
+
+    useEffect(() => {
+        (async () => {
+            const colRef = collection(configs.firebase.db, "posts");
+            const searchColRef = searchDebounce
+                ? query(
+                      colRef,
+                      where("title", ">=", searchDebounce),
+                      where("title", "<=", `${searchDebounce}\uf8ff`),
+                      limit(1)
+                  )
+                : query(colRef, limit(1));
+            const documentSnapshots = await getDocs(searchColRef);
+            // Get the last visible document
+            const lastVisible =
+                documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+            setLastDoc(lastVisible);
+
+            onSnapshot(colRef, (snapshot) => {
+                setTotalPage(snapshot.size);
+            });
+
+            onSnapshot(searchColRef, (snapshot) => {
+                const results: AddPostType[] = [];
+
+                snapshot.forEach((doc) => {
+                    results.push({
+                        ...doc.data(),
+                        id: doc.id,
+                    } as AddPostType);
+                });
+
+                setPosts(results);
+            });
+        })();
+    }, [searchDebounce]);
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
+        setSearch(e.target.value);
+
+    const handleLoadMore = async () => {
+        try {
+            // Construct a new query starting at this document,
+            const next = query(
+                collection(configs.firebase.db, "posts"),
+                startAfter(lastDoc || 0),
+                limit(1)
+            );
+            const documentSnapshots = await getDocs(next);
+            const lastVisible =
+                documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+            onSnapshot(next, (snapshot) => {
+                const results: AddPostType[] = [];
+
+                snapshot.forEach((doc) => {
+                    results.push({
+                        ...doc.data(),
+                        id: doc.id,
+                    } as AddPostType);
+                });
+
+                setPosts([...posts, ...results]);
+            });
+
+            setLastDoc(lastVisible);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleDeletePost = async (id: string) => {
+        const willDelete = await swal({
+            title: "Are you sure?",
+            text: "Are you sure that you want to delete this file?",
+            icon: "warning",
+            dangerMode: true,
+        });
+
+        if (willDelete) {
+            try {
+                await deleteDoc(doc(configs.firebase.db, "posts", id));
+                swal(
+                    "Deleted!",
+                    "Your imaginary file has been deleted!",
+                    "success"
+                );
+            } catch (error) {
+                swal("Failed!", "Something went wrong!", "error");
+            }
+        }
+    };
+
+    const renderStatusPost = (status: number) => {
+        switch (status) {
+            case PostStatus.APPROVED:
+                return <Tag variant="success">Approved</Tag>;
+            case PostStatus.PENDING:
+                return <Tag variant="warning">Pending</Tag>;
+            case PostStatus.REJECTED:
+                return <Tag variant="danger">Rejected</Tag>;
+        }
+    };
+
     return (
         <PostStyled>
             <Heading title="All posts" subtitle="Manage all posts" />
@@ -21,6 +153,8 @@ const Post = () => {
                         type="text"
                         className="post__search-input"
                         placeholder="Search post..."
+                        value={search}
+                        onChange={handleSearch}
                     />
                 </div>
             </div>
@@ -28,102 +162,73 @@ const Post = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Id</th>
                         <th>Post</th>
                         <th>Category</th>
                         <th>Author</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td>01</td>
-                        <td>
-                            <div className="post__image">
-                                <img
-                                    src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"
-                                    alt=""
-                                    className="post__image-img"
-                                />
-                                <div className="post__desc">
-                                    <h3>One Special 4K Camera</h3>
-                                    <time className="post__text">
-                                        Date: 25 Oct 2021
-                                    </time>
+                    {posts.map((post) => (
+                        <tr key={post.id}>
+                            <td>{post.id}</td>
+                            <td>
+                                <div className="post__image">
+                                    <img
+                                        src={post.url}
+                                        alt={post.title}
+                                        className="post__image-img"
+                                    />
+                                    <div className="post__desc">
+                                        <h3>{post.title}</h3>
+                                        <time className="post__text">
+                                            {new Date(
+                                                post.createdAt.seconds * 1000
+                                            ).toLocaleDateString("vi-VN")}
+                                        </time>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span className="post__text">Camera Gear</span>
-                        </td>
-                        <td>
-                            <span className="post__text">Evondev</span>
-                        </td>
-                        <td>
-                            <div className="post__actions post__text">
-                                <span className="post__icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                        />
-                                    </svg>
+                            </td>
+                            <td>
+                                <span className="post__text">
+                                    {post.categoryId}
                                 </span>
-                                <span className="post__icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                        />
-                                    </svg>
+                            </td>
+                            <td>
+                                <span className="post__text">
+                                    {post.userId}
                                 </span>
-                                <span className="post__icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                        />
-                                    </svg>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                            <td>{renderStatusPost(post.status)}</td>
+                            <td>
+                                <div className="post__actions post__text">
+                                    <Actions.View />
+                                    <Actions.Edit />
+                                    <Actions.Delete
+                                        onClick={() =>
+                                            handleDeletePost(post.id)
+                                        }
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
 
-            <div className="post__pagination">
-                <Button variant="default" className="post__btn">
-                    See more+
-                </Button>
-            </div>
+            {posts.length < totalPage && (
+                <div className="post__pagination">
+                    <Button
+                        variant="default"
+                        className="post__btn"
+                        onClick={handleLoadMore}
+                    >
+                        See more+
+                    </Button>
+                </div>
+            )}
         </PostStyled>
     );
 };
