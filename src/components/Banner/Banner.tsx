@@ -13,7 +13,7 @@ const Banner = () => {
                     Expedita sit laudantium molestiae.
                 </p>
 
-                <ButtonStyled>Get Started</ButtonStyled>
+                <ButtonStyled variant="primary">Get Started</ButtonStyled>
             </div>
 
             <figure className="media">

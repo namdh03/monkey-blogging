@@ -5,8 +5,10 @@ export enum AuthActionType {
 }
 
 export enum Role {
-    ADMIN = "ADMIN",
-    USER = "USER",
+    ADMIN = 1,
+    MODERATOR = 2,
+    USER = 3,
+    EDITOR = 4,
 }
 
 export enum PostStatus {
@@ -18,4 +20,10 @@ export enum PostStatus {
 export enum CategoryStatus {
     APPROVED = 1,
     UN_APPROVED = 0,
+}
+
+export enum UserStatus {
+    ACTIVE = 1,
+    INACTIVE = 0,
+    BAN = -1,
 }

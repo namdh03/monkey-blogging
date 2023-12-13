@@ -13,6 +13,8 @@ const routes = {
     addCategory: "/manage/add-category",
     profile: "/profile",
     updateCategory: "/manage/update-category",
+    addUser: "/manage/add-user",
+    updateUser: "/manage/update-user",
     notFound: "*",
 };
 

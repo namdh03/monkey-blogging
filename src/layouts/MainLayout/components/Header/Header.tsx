@@ -61,9 +61,9 @@ const Header = () => {
             </div>
 
             {user ? (
-                <span className="user">
-                    Hello, {user.displayName || "guys"}
-                </span>
+                <Button variant="secondary" to={configs.routes.dashboard}>
+                    Dashboard
+                </Button>
             ) : (
                 <Button variant="secondary" to={configs.routes.signUp}>
                     Sign Up

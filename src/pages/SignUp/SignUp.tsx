@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import slugify from "slugify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import eye from "@assets/icons/eye.svg";
 import eyeSlash from "@assets/icons/eye-slash.svg";
 import Field from "@components/Field";
@@ -13,6 +14,7 @@ import Input from "@components/Input";
 import Button from "@components/Button";
 import configs from "@configs/index";
 import { SignUpType } from "@ts/index";
+import { Role, UserStatus } from "@utils/enum";
 import schema from "./SignUp.schema";
 
 const SignUp: FC = () => {
@@ -54,6 +56,11 @@ const SignUp: FC = () => {
             await setDoc(doc(colRef, configs.firebase.auth.currentUser?.uid), {
                 fullname: values.fullname,
                 email: values.email,
+                username: slugify(values.fullname, { lower: true }),
+                status: UserStatus.ACTIVE,
+                role: Role.USER,
+                createdAt: serverTimestamp(),
+                avatar: "https://static2-images.vnncdn.net/files/publish/2022/12/8/meo-1-1416.jpg",
             });
         } catch (error) {
             toast.error((error as Error).message, {

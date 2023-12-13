@@ -41,5 +41,8 @@ export const BannerStyled = styled.section`
 `;
 
 export const ButtonStyled = styled(Button)`
+    --width: 160px;
+    --height: 60px;
     margin-top: 48px;
+    font-size: 1.8rem;
 `;

@@ -134,7 +134,6 @@ const AddPost = () => {
                         <Label htmlFor="image">Image</Label>
                         <Upload
                             onChange={onSelectFile}
-                            className="h-[250px]"
                             progress={progress}
                             image={image}
                             onDelete={onDelete}

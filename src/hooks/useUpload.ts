@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import {
     ref,
     uploadBytesResumable,
@@ -7,11 +6,14 @@ import {
     deleteObject,
     getStorage,
 } from "firebase/storage";
-import { AddPostType } from "@ts/index";
 
 export default function useUpload(
-    setValue: UseFormSetValue<AddPostType>,
-    getValues: UseFormGetValues<AddPostType>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setValue: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getValues: any,
+    imageName?: string,
+    deleteImage?: () => void
 ) {
     const [progress, setProgress] = useState<number>(0);
     const [image, setImage] = useState<string>("");
@@ -27,7 +29,7 @@ export default function useUpload(
         setValue("image", "");
         setImage("");
         setProgress(0);
-    }
+    };
 
     const handleUploadImage = async (file: File) => {
         const storage = getStorage();
@@ -91,7 +93,10 @@ export default function useUpload(
         const storage = getStorage();
 
         // Create a reference to the file to delete
-        const imageRef = ref(storage, "images/" + getValues("image"));
+        const imageRef = ref(
+            storage,
+            "images/" + imageName || getValues("image")
+        );
 
         // Delete the file
         deleteObject(imageRef)
@@ -99,6 +104,7 @@ export default function useUpload(
                 // File deleted successfully
                 setImage("");
                 setProgress(0);
+                deleteImage && deleteImage();
             })
             .catch((error) => {
                 // Uh-oh, an error occurred!
@@ -110,6 +116,7 @@ export default function useUpload(
     return {
         progress,
         image,
+        setImage,
         onReset,
         onSelectFile,
         onDelete,

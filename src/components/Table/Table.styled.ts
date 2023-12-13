@@ -15,6 +15,7 @@ export const TableStyled = styled.section`
 
     th,
     td {
+        white-space: nowrap;
         vertical-align: middle;
     }
 

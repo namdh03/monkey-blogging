@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, Dispatch } from "react";
 import { Control } from "react-hook-form";
 import { Timestamp } from "firebase/firestore";
 import { User } from "firebase/auth";
-import { AuthActionType, Role } from "@utils/enum";
+import { AuthActionType, Role, UserStatus } from "@utils/enum";
 
 export type AuthState = {
     isAuthenticated?: boolean;
@@ -80,12 +80,25 @@ export type ProfileType = {
     confirmPassword: string;
 };
 
+export type UserType = {
+    id: string;
+    avatar: string;
+    fullname: string;
+    email: string;
+    createdAt: Timestamp;
+    username: string;
+    status: UserStatus;
+    role: Role;
+    password: string;
+};
+
 export type FormType =
     | SignInType
     | SignUpType
     | AddPostType
     | AddCategoryType
-    | ProfileType;
+    | ProfileType
+    | UserType;
 
 export type InputProps = {
     id: string;
@@ -94,14 +107,16 @@ export type InputProps = {
         | keyof SignUpType
         | keyof AddPostType
         | keyof AddCategoryType
-        | keyof ProfileType;
+        | keyof ProfileType
+        | keyof UserType;
     type: string;
     control:
         | Control<SignInType>
         | Control<SignUpType>
         | Control<AddPostType>
         | Control<AddCategoryType>
-        | Control<ProfileType>;
+        | Control<ProfileType>
+        | Control<UserType>;
     placeholder?: string;
     icon?: IconProps;
 };
@@ -166,8 +181,11 @@ export type SearchProps = ComponentPropsWithoutRef<"input"> & {
 export type RadioProps = ComponentPropsWithoutRef<"input"> & {
     checked?: boolean;
     children: React.ReactNode;
-    control: Control<AddPostType> | Control<AddCategoryType>;
-    name: keyof AddPostType | keyof AddCategoryType;
+    control:
+        | Control<AddPostType>
+        | Control<AddCategoryType>
+        | Control<UserType>;
+    name: keyof AddPostType | keyof AddCategoryType | keyof UserType;
 };
 
 export type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
@@ -208,17 +226,6 @@ export type SelectProps = ComponentPropsWithoutRef<"div"> & {
 export type OptionProps = {
     children: React.ReactNode;
     onClick: () => void;
-};
-
-export type UserType = {
-    id: string;
-    avatar: string;
-    fullname: string;
-    email: string;
-    createdAt: Timestamp;
-    username: string;
-    status: number;
-    role: string;
 };
 
 export type AdminHeadingProps = {
