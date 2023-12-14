@@ -61,6 +61,7 @@ export type AddPostType = {
     top: number;
     url: string;
     createdAt: Timestamp;
+    content: string;
 };
 
 export type AddCategoryType = {

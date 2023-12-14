@@ -61,7 +61,7 @@ const Feature: FC<{ data: AddPostType }> = ({ data }) => {
                         className="post-info"
                     />
                 </div>
-                <Title to={configs.routes.home} size="large">
+                <Title to={`${configs.routes.blog}/${data.slug}`} size="large">
                     {data.title}
                 </Title>
             </div>

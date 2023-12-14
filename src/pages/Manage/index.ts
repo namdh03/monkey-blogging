@@ -6,6 +6,7 @@ import User from "./User";
 import UpdateCategory from "./UpdateCategory";
 import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser";
+import UpdatePost from "./UpdatePost";
 
 const Manage = {
     Post,
@@ -16,6 +17,7 @@ const Manage = {
     UpdateCategory,
     AddUser,
     UpdateUser,
+    UpdatePost,
 };
 
 export default Manage;

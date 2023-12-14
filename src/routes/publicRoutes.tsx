@@ -17,7 +17,7 @@ const publicRoutes = [
                 element: <Home />,
             },
             {
-                path: configs.routes.blog,
+                path: configs.routes.blogDetail,
                 element: <Blog />,
             },
         ],

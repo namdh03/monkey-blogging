@@ -39,7 +39,7 @@ export const BlogStyled = styled.div`
         }
     }
 
-    .author {
+    .blog-author {
         margin-top: 40px;
         margin-bottom: 80px;
         display: flex;

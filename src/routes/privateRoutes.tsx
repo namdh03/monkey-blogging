@@ -50,6 +50,7 @@ const privateRoutes = [
                 element: <Manage.AddUser />,
             },
             { path: configs.routes.updateUser, element: <Manage.UpdateUser /> },
+            { path: configs.routes.updatePost, element: <Manage.UpdatePost /> },
         ],
     },
 ];

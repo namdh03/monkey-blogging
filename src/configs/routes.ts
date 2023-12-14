@@ -3,6 +3,7 @@ const routes = {
     signIn: "/sign-in",
     signUp: "/sign-up",
     blog: "/blog",
+    blogDetail: "/blog/:slug",
     contact: "/contact",
     dashboard: "/dashboard",
     manage: "/manage",
@@ -15,6 +16,7 @@ const routes = {
     updateCategory: "/manage/update-category",
     addUser: "/manage/add-user",
     updateUser: "/manage/update-user",
+    updatePost: "/manage/update-post",
     notFound: "*",
 };
 

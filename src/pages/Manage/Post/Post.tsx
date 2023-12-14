@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     DocumentData,
     QueryDocumentSnapshot,
@@ -27,6 +28,7 @@ import Heading from "../Heading";
 import { PostStyled } from "./Post.styled";
 
 const Post = () => {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState<AddPostType[]>([]);
     const [lastDoc, setLastDoc] =
         useState<QueryDocumentSnapshot<DocumentData, DocumentData>>();
@@ -204,8 +206,20 @@ const Post = () => {
                             <td>{renderStatusPost(post.status)}</td>
                             <td>
                                 <div className="post__actions post__text">
-                                    <Actions.View />
-                                    <Actions.Edit />
+                                    <Actions.View
+                                        onClick={() =>
+                                            navigate(
+                                                `${configs.routes.blog}/${post.slug}`
+                                            )
+                                        }
+                                    />
+                                    <Actions.Edit
+                                        onClick={() =>
+                                            navigate(
+                                                `${configs.routes.updatePost}?id=${post.id}`
+                                            )
+                                        }
+                                    />
                                     <Actions.Delete
                                         onClick={() =>
                                             handleDeletePost(post.id)

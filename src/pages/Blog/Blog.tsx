@@ -1,124 +1,117 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import {
+    collection,
+    doc,
+    getDoc,
+    onSnapshot,
+    query,
+    where,
+} from "firebase/firestore";
+import swal from "sweetalert";
+import parse from "html-react-parser";
 import Heading from "@components/Heading";
 import Image from "@components/Image";
 import Category from "@components/Category";
 import Meta from "@components/Meta";
 import Post from "@components/Post";
+import configs from "@configs/index";
+import { AddPostType, CategoryType, UserType } from "@ts/index";
 import { BlogStyled } from "./Blog.styled";
 
 const Blog = () => {
+    const { slug } = useParams<{ slug: string }>();
+    const [blog, setBlog] = useState<AddPostType>({} as AddPostType);
+    const [category, setCategory] = useState<CategoryType>({} as CategoryType);
+    const [user, setUser] = useState<UserType>({} as UserType);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!slug) return;
+
+                const colRef = query(
+                    collection(configs.firebase.db, "posts"),
+                    where("slug", "==", slug)
+                );
+
+                onSnapshot(colRef, (snapshot) => {
+                    snapshot.forEach((doc) => {
+                        doc.data() && setBlog(doc.data() as AddPostType);
+                    });
+                });
+            } catch (error) {
+                swal("Failed!", "Something went wrong!", "error");
+            }
+        })();
+    }, [slug]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!blog.categoryId) return;
+
+                const colRef = doc(
+                    configs.firebase.db,
+                    "categories",
+                    blog.categoryId
+                );
+                const docSnap = await getDoc(colRef);
+
+                setCategory(docSnap.data() as CategoryType);
+            } catch (error) {
+                swal("Failed!", "Something went wrong!", "error");
+            }
+        })();
+    }, [blog.categoryId]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!blog.userId) return;
+
+                const colRef = doc(configs.firebase.db, "users", blog.userId);
+                const docSnap = await getDoc(colRef);
+
+                setUser(docSnap.data() as UserType);
+            } catch (error) {
+                swal("Failed!", "Something went wrong!", "error");
+            }
+        })();
+    }, [blog.userId]);
+
     return (
         <BlogStyled>
             <div className="container">
                 <div className="post-header">
-                    <Image
-                        url="https://images.unsplash.com/photo-1649837867356-6c7ef7057f32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                        className="post-feature"
-                    />
+                    <Image url={blog.url} className="post-feature" />
                     <div className="post-info">
-                        <Category className="post-category">Kiến thức</Category>
-                        <h1 className="post-heading">
-                            Hướng dẫn setup phòng cực chill dành cho người mới
-                            toàn tập
-                        </h1>
-                        <Meta />
+                        <Category variant="primary" className="post-category">
+                            {category.categoryName}
+                        </Category>
+                        <h1 className="post-heading">{blog.title}</h1>
+                        <Meta
+                            author={user.username}
+                            time={new Date(
+                                blog.createdAt?.seconds * 1000
+                            ).toLocaleDateString("vi-VN")}
+                        />
                     </div>
                 </div>
                 <div className="post-content">
                     <div className="entry-content">
-                        <h2>Chương 1</h2>
-                        <p>
-                            Gastronomy atmosphere set aside. Slice butternut
-                            cooking home. Delicious romantic undisturbed raw
-                            platter will meld. Thick Skewers skillet natural,
-                            smoker soy sauce wait roux. slices Food qualities
-                            braise chicken cuts bowl through slices butternut
-                            snack. Tender meat juicy dinners. One-pot low heat
-                            plenty of time adobo fat raw soften fruit. sweet
-                            renders bone-in marrow richness kitchen, fricassee
-                            basted pork shoulder. Delicious butternut squash
-                            hunk. Flavor centerpiece plate, delicious ribs
-                            bone-in meat, excess chef end. sweet effortlessly
-                            pork, low heat smoker soy sauce flavor meat, rice
-                            fruit fruit. Romantic fall-off-the-bone butternut
-                            chuck rice burgers. renders aromatic enjoyment, then
-                            slices taco. Minutes undisturbed cuisine lunch
-                            magnificent mustard curry. Juicy share baking sheet
-                            pork. Meals ramen rarities selection, raw pastries
-                            richness magnificent atmosphere. Sweet soften
-                            dinners, cover mustard infused skillet, Skewers on
-                            culinary experience.
-                        </p>
-
-                        <p>
-                            Juicy meatballs brisket slammin' baked shoulder.
-                            Juicy smoker soy sauce burgers brisket. polenta
-                            mustard hunk greens. Wine technique snack skewers
-                            chuck excess. Oil heat slowly. slices natural
-                            delicious, set aside magic tbsp skillet, bay leaves
-                            brown centerpiece. fruit soften edges frond slices
-                            onion snack pork steem on wines excess technique
-                            cup; Cover smoker soy sauce fruit snack. Sweet
-                            one-dozen scrape delicious, non sheet raw crunch
-                            mustard. Minutes clever slotted tongs scrape, brown
-                            steem undisturbed rice.
-                        </p>
-
-                        <p>
-                            Food qualities braise chicken cuts bowl through
-                            slices butternut snack. Tender meat juicy dinners.
-                            One-pot low heat plenty of time adobo fat raw soften
-                            fruit. sweet renders bone-in marrow richness
-                            kitchen, fricassee basted pork shoulder. Delicious
-                            butternut squash hunk. Flavor centerpiece plate,
-                            delicious ribs bone-in meat, excess chef end. sweet
-                            effortlessly pork, low heat smoker soy sauce flavor
-                            meat, rice fruit fruit. Romantic fall-off-the-bone
-                            butternut chuck rice burgers.
-                        </p>
-                        <figure>
-                            <img
-                                src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                                alt=""
-                            />
-                            <figcaption>
-                                Gastronomy atmosphere set aside. Slice butternut
-                                cooking home.
-                            </figcaption>
-                        </figure>
-                        <h2>Chương 2</h2>
-                        <p>
-                            Gastronomy atmosphere set aside. Slice butternut
-                            cooking home. Delicious romantic undisturbed raw
-                            platter will meld. Thick Skewers skillet natural,
-                            smoker soy sauce wait roux. slices Food qualities
-                            braise chicken cuts bowl through slices butternut
-                            snack. Tender meat juicy dinners. One-pot low heat
-                            plenty of time adobo fat raw soften fruit. sweet
-                            renders bone-in marrow richness kitchen, fricassee
-                            basted pork shoulder. Delicious butternut squash
-                            hunk. Flavor centerpiece plate, delicious ribs
-                            bone-in meat, excess chef end. sweet effortlessly
-                            pork, low heat smoker soy sauce flavor meat, rice
-                            fruit fruit. Romantic fall-off-the-bone butternut
-                            chuck rice burgers. renders aromatic enjoyment, then
-                            slices taco. Minutes undisturbed cuisine lunch
-                            magnificent mustard curry. Juicy share baking sheet
-                            pork. Meals ramen rarities selection, raw pastries
-                            richness magnificent atmosphere. Sweet soften
-                            dinners, cover mustard infused skillet, Skewers on
-                            culinary experience.
-                        </p>
+                        {parse(blog.content || "")}
                     </div>
-                    <div className="author">
-                        <div className="author-image">
-                            <img
-                                src="https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-                                alt=""
-                            />
+
+                    <div className="blog-author">
+                        <div className="blog-author-image">
+                            <img src={user.avatar} alt="" />
                         </div>
-                        <div className="author-content">
-                            <h3 className="author-name">Evondev</h3>
-                            <p className="author-desc">
+                        <div className="blog-author-content">
+                            <h3 className="blog-author-name">
+                                {user.fullname}
+                            </h3>
+                            <p className="blog-author-desc">
                                 Lorem, ipsum dolor sit amet consectetur
                                 adipisicing elit. Dignissimos non animi porro
                                 voluptates quibusdam optio nulla quis nihil ipsa

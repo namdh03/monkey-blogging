@@ -234,7 +234,9 @@ export const GlobalClasses = css`
         }
     }
 
-    .entry-content {
+    .entry-content,
+    .entry-content .ql-snow .ql-editor {
+        font-family: "Epilogue", sans-serif;
         font-size: 1.6rem;
 
         h2,
@@ -321,5 +323,10 @@ export const GlobalClasses = css`
         & > * {
             margin-top: 0;
         }
+    }
+
+    .form-layout--full {
+        grid-template-columns: 1fr;
+        column-gap: 0;
     }
 `;

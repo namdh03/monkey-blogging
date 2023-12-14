@@ -1,64 +1,91 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import slugify from "slugify";
+import { useSearchParams } from "react-router-dom";
 import {
-    addDoc,
     collection,
+    doc,
+    getDoc,
     getDocs,
-    query,
-    serverTimestamp,
-    where,
+    updateDoc,
 } from "firebase/firestore";
-import { toast } from "react-toastify";
+import swal from "sweetalert";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import Field from "@components/Field";
 import Label from "@components/Label";
 import Input from "@components/Input";
-import Radio from "@components/Radio";
-import Dropdown from "@components/Dropdown";
-import Option from "@components/Option";
-import Button from "@components/Button";
 import Upload from "@components/Upload";
-import Toggle from "@components/Toggle";
+import Dropdown from "@components/Dropdown";
 import Select from "@components/Select";
 import List from "@components/List/List";
+import Option from "@components/Option";
+import Toggle from "@components/Toggle";
+import Radio from "@components/Radio";
+import Button from "@components/Button";
 import configs from "@configs/index";
-import { useAuth, useUpload } from "@hooks/index";
-import { AddPostType, CategoryType } from "@ts/index";
+import { useUpload } from "@hooks/index";
 import { PostStatus } from "@utils/enum";
+import { AddPostType, CategoryType } from "@ts/index";
 import Heading from "../Heading";
-import { AddPostStyled } from "./AddPost.styled";
+import { UpdatePostStyled } from "./UpdatePost.styled";
 
-const AddPost = () => {
-    const { user } = useAuth();
-    const navigate = useNavigate();
-    const { control, watch, setValue, handleSubmit, getValues, reset } =
-        useForm<AddPostType>({
-            defaultValues: {
-                title: "",
-                slug: "",
-                categoryId: "",
-                status: PostStatus.PENDING,
-                image: "",
-                top: 0,
-            },
-        });
+const UpdatePost = () => {
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
+    const { handleSubmit, control, reset, setValue, getValues, watch } =
+        useForm<AddPostType>();
     const watchStatus = watch("status");
     const watchTop = watch("top");
-    const { image, progress, onReset, onSelectFile, onDelete } = useUpload(
+    const imageUrl = getValues("url");
+    const imageName = getValues("image");
+    const { image, setImage, progress, onSelectFile, onDelete } = useUpload(
         setValue,
-        getValues
+        getValues,
+        imageName,
+        handleDeletePostImg
     );
     const [loading, setLoading] = useState<boolean>(false);
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>();
+    const [content, setContent] = useState<string>("");
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!id) return null;
+
+                setLoading(true);
+
+                const docRef = doc(configs.firebase.db, "posts", id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const cofRef = doc(
+                        configs.firebase.db,
+                        "categories",
+                        docSnap.data()?.categoryId
+                    );
+                    const cofSnap = await getDoc(cofRef);
+
+                    reset(docSnap.data());
+                    setSelectedCategory(cofSnap.data() as CategoryType);
+                } else {
+                    // docSnap.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                swal("Failed!", "Something went wrong!", "error");
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [id, reset]);
 
     useEffect(() => {
         (async () => {
             const result: CategoryType[] = [];
             const colRef = collection(configs.firebase.db, "categories");
-            const q = query(colRef, where("status", "==", 1));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(colRef);
 
             querySnapshot.forEach((doc) => {
                 result.push({
@@ -71,44 +98,47 @@ const AddPost = () => {
         })();
     }, []);
 
-    const handleAddPost = async (values: AddPostType) => {
-        try {
-            setLoading(true);
+    useEffect(() => {
+        setImage(imageUrl);
+    }, [imageUrl, setImage]);
 
-            const post = {
-                ...values,
-                status: Number(values.status),
-                slug: slugify(values.slug || values.title, { lower: true }),
-            };
+    async function handleDeletePostImg() {
+        if (!id) return null;
 
-            const cofRef = collection(configs.firebase.db, "posts");
-            await addDoc(cofRef, {
-                ...post,
-                url: image,
-                userId: user?.uid,
-                createdAt: serverTimestamp(),
-            });
-            toast.success("Add new post successfully!");
-            reset();
-            onReset();
-            setSelectedCategory(undefined);
-            navigate(configs.routes.managePost);
-        } catch (error) {
-            toast.error("Add new post failed!");
-        } finally {
-            setLoading(false);
-        }
-    };
+        const colRef = doc(configs.firebase.db, "posts", id);
+
+        await updateDoc(colRef, {
+            image: "",
+            url: "",
+        });
+    }
 
     const handleSelectOption = (category: CategoryType) => {
         setValue("categoryId", category.id);
         setSelectedCategory(category);
     };
 
+    const handleUpdatePost = async (values: AddPostType) => {
+        console.log(values);
+        if (!id) return null;
+
+        try {
+            const colRel = doc(configs.firebase.db, "posts", id);
+
+            await updateDoc(colRel, {
+                content,
+            });
+            swal("Success!", "Update post successfully!", "success");
+        } catch (error) {
+            swal("Failed!", "Something went wrong!", "error");
+        }
+    };
+
     return (
-        <AddPostStyled>
-            <Heading title="Add post" subtitle="Add new post" />
-            <form onSubmit={handleSubmit(handleAddPost)}>
+        <UpdatePostStyled>
+            <Heading title="Update post" subtitle="Update post content" />
+
+            <form onSubmit={handleSubmit(handleUpdatePost)}>
                 <div className="form-layout">
                     <Field>
                         <Label htmlFor="title">Title</Label>
@@ -174,6 +204,19 @@ const AddPost = () => {
                     </Field>
                 </div>
 
+                <div className="form-layout form-layout--full">
+                    <Field>
+                        <Label htmlFor="content">Content</Label>
+                        <div className="entry-content quill">
+                            <ReactQuill
+                                theme="snow"
+                                value={content}
+                                onChange={setContent}
+                            />
+                        </div>
+                    </Field>
+                </div>
+
                 <div className="form-layout">
                     <Field>
                         <Label htmlFor="top">Top</Label>
@@ -226,11 +269,11 @@ const AddPost = () => {
                     className="mx-auto"
                     isLoading={loading}
                 >
-                    Add new post
+                    Update post
                 </Button>
             </form>
-        </AddPostStyled>
+        </UpdatePostStyled>
     );
 };
 
-export default AddPost;
+export default UpdatePost;
