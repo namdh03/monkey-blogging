@@ -142,6 +142,8 @@ const UpdatePost = () => {
 
             await updateDoc(colRel, {
                 ...values,
+                image: imageName,
+                url: image,
                 content,
             });
             swal("Success!", "Update post successfully!", "success");
