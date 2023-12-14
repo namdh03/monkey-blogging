@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import swal from "sweetalert";
 import parse from "html-react-parser";
+import NotFound from "@pages/NotFound";
 import Heading from "@components/Heading";
 import Image from "@components/Image";
 import Category from "@components/Category";
@@ -79,6 +80,8 @@ const Blog = () => {
             }
         })();
     }, [blog.userId]);
+
+    if (!blog.title) return <NotFound />;
 
     return (
         <BlogStyled>

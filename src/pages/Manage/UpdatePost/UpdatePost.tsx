@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
     collection,
     doc,
@@ -30,6 +30,7 @@ import Heading from "../Heading";
 import { UpdatePostStyled } from "./UpdatePost.styled";
 
 const UpdatePost = () => {
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const { handleSubmit, control, reset, setValue, getValues, watch } =
@@ -48,6 +49,20 @@ const UpdatePost = () => {
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>();
     const [content, setContent] = useState<string>("");
+
+    const modules = useMemo(
+        () => ({
+            toolbar: [
+                ["bold", "italic", "underline", "strike"],
+                ["blockquote"],
+                [{ header: 1 }, { header: 2 }], // custom button values
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                ["link", "image"],
+            ],
+        }),
+        []
+    );
 
     useEffect(() => {
         (async () => {
@@ -69,6 +84,7 @@ const UpdatePost = () => {
 
                     reset(docSnap.data());
                     setSelectedCategory(cofSnap.data() as CategoryType);
+                    setContent(docSnap.data()?.content);
                 } else {
                     // docSnap.data() will be undefined in this case
                     console.log("No such document!");
@@ -119,16 +135,18 @@ const UpdatePost = () => {
     };
 
     const handleUpdatePost = async (values: AddPostType) => {
-        console.log(values);
         if (!id) return null;
 
         try {
             const colRel = doc(configs.firebase.db, "posts", id);
 
             await updateDoc(colRel, {
+                ...values,
                 content,
             });
             swal("Success!", "Update post successfully!", "success");
+
+            navigate(configs.routes.managePost);
         } catch (error) {
             swal("Failed!", "Something went wrong!", "error");
         }
@@ -212,6 +230,7 @@ const UpdatePost = () => {
                                 theme="snow"
                                 value={content}
                                 onChange={setContent}
+                                modules={modules}
                             />
                         </div>
                     </Field>

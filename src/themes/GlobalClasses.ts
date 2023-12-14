@@ -267,6 +267,7 @@ export const GlobalClasses = css`
             margin-bottom: 20px;
         }
 
+        img,
         figure img {
             width: 100%;
             border-radius: 20px;
@@ -328,5 +329,15 @@ export const GlobalClasses = css`
     .form-layout--full {
         grid-template-columns: 1fr;
         column-gap: 0;
+    }
+
+    .quill {
+        position: relative;
+
+        .ql-toolbar {
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
+        }
     }
 `;
